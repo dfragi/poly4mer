@@ -20,6 +20,8 @@ This repository houses the code for our work in forward prediction and inverse p
 
 6. The encoder, decoder and the four property predictors now ship as a **single checkpoint**, and the property predictors read the latent directly, so no separate normalization file is needed at inference.
 
+7. Optional **hard-monotone** property heads for Tig and pHRR enforce the physical dependence on heat flux by construction; see [`poly4mer_monotone/`](poly4mer_monotone/README.md).
+
 > **Two kinds of "predictor".** In the checkpoint, the key `predictor` is the **token predictor**, the last part of the decoder module. The **property predictors** are stored under `property_regressors`.
 
 ## What changed since `v2.0.0`
@@ -63,6 +65,8 @@ Download the following from our [HuggingFace mirror](https://huggingface.co/fish
   - `poly4mer_v3.ckpt`
 - Pretrained SMI-TED encoder (1.1 GB) → `smi_ted_light/`
   - `smi-ted-Light_40.pt`
+- *Optional*, monotone Tig and pHRR heads (40 files, 126 MB) → `poly4mer_monotone/checkpoint/`
+  - see [`poly4mer_monotone/README.md`](poly4mer_monotone/README.md) for the sub-folder layout
 
 Both files are ignored by git. After downloading, the layout should look like:
 
@@ -76,6 +80,13 @@ poly4mer/
     |-- load.py
     |-- smi-ted-Light_40.pt
     ...
+|-- poly4mer_monotone/
+    |-- checkpoint/
+        |-- tig/{full_head,last_two_linear}/
+        |-- phrr/{full_head,last_two_linear}/
+    |-- fire_property_prediction_monotone.py
+    |-- run_property_prediction_monotone.sh
+    |-- README.md
 |-- training/
     |-- train_poly4mer_v3_property_reg.py
     |-- train_property_predictor_finetune.py
@@ -209,6 +220,23 @@ This reports exact match, token accuracy, validity, same-molecule rate, and how 
 `training/train_property_predictor_finetune.py` fine-tunes only the property heads on labeled
 data with the encoder frozen. Both read `checkpoint/poly4mer_v3.ckpt` by default. See the
 docstring at the top of each script for the expected data format.
+
+## Monotone property heads (optional)
+
+[`poly4mer_monotone/`](poly4mer_monotone/README.md) holds alternative Tig and pHRR heads that
+are hard-monotone in heat flux: Tig can only fall as flux rises, pHRR can only rise. The
+constraint is structural rather than a penalty, so it holds for every input. The encoder is
+the same file as the main model; only the heads differ, and SEA and CO are not covered.
+
+```bash
+cd poly4mer_monotone
+./run_property_prediction_monotone.sh
+```
+
+Use them when a prediction feeds an optimizer or a screening loop and a non-physical flux
+trend would be costly. On held-out polymers they are **level with**, not better than, the
+plain heads under leakage-free selection; the case for them is the guarantee, not the
+accuracy. That folder's README gives both sets of numbers.
 
 ## Citation
 
