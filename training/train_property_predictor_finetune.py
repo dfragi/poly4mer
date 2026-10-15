@@ -234,7 +234,7 @@ def main():
     ap = argparse.ArgumentParser(description="Phase I: fine-tune the property heads on labeled data with the encoder frozen.")
     ap.add_argument("--train_labeled", default=None, help="Comma-separated labeled files (required unless --eval_only).")
     ap.add_argument("--val_labeled", default=None, help="Comma-separated labeled files for validation and model selection.")
-    ap.add_argument("--checkpoint", default=os.path.join(REPO_DIR, "poly4mer_v3.ckpt"),
+    ap.add_argument("--checkpoint", default=os.path.join(REPO_DIR, "checkpoint", "poly4mer_v3.ckpt"),
                     help="Checkpoint providing the frozen encoder and (by default) the initial heads and statistics.")
     ap.add_argument("--encoder_checkpoint", default=None,
                     help="If --checkpoint is a heads-only file (heads_best.ckpt), the full checkpoint to take the encoder from "
@@ -278,7 +278,7 @@ def main():
     if "autoencoder_encoder" in ck:
         enc_ck = ck
     else:  # heads-only file: encoder comes from the full checkpoint
-        enc_path = args.encoder_checkpoint or os.path.join(REPO_DIR, "poly4mer_v3.ckpt")
+        enc_path = args.encoder_checkpoint or os.path.join(REPO_DIR, "checkpoint", "poly4mer_v3.ckpt")
         enc_ck = torch.load(enc_path, map_location="cpu", weights_only=False, mmap=True)
         print(f">> encoder taken from {enc_path}")
 
@@ -403,7 +403,7 @@ def main():
         best = torch.load(best_path, map_location="cpu", weights_only=False)
         full = {k: ck[k] for k in ("star_encoder", "autoencoder_encoder", "decoder", "predictor")} if "decoder" in ck else None
         if full is None:
-            enc_path = args.encoder_checkpoint or os.path.join(REPO_DIR, "poly4mer_v3.ckpt")
+            enc_path = args.encoder_checkpoint or os.path.join(REPO_DIR, "checkpoint", "poly4mer_v3.ckpt")
             src = torch.load(enc_path, map_location="cpu", weights_only=False, mmap=True)
             full = {k: src[k] for k in ("star_encoder", "autoencoder_encoder", "decoder", "predictor")}
         full["property_regressors"] = best["property_regressors"]

@@ -143,7 +143,7 @@ def get_parser():
     p.add_argument("--flux", type=float, default=50.0, help="Incident heat flux, kW/m^2.")
 
     # weights
-    p.add_argument("--checkpoint", default=os.path.join(SCRIPT_DIR, "poly4mer_v3.ckpt"))
+    p.add_argument("--checkpoint", default=os.path.join(SCRIPT_DIR, "checkpoint", "poly4mer_v3.ckpt"))
     p.add_argument("--heads_ckpt", default=None,
                    help="Optional separate file holding property_regressors and "
                         "property_stats; by default the heads in --checkpoint are used.")

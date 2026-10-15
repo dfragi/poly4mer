@@ -87,7 +87,7 @@ def canon(s):
 
 def main():
     ap = argparse.ArgumentParser(description="pSMILES reconstruction accuracy of poly4mer_v3.")
-    ap.add_argument("--checkpoint", default=os.path.join(SCRIPT_DIR, "poly4mer_v3.ckpt"))
+    ap.add_argument("--checkpoint", default=os.path.join(SCRIPT_DIR, "checkpoint", "poly4mer_v3.ckpt"))
     ap.add_argument("--files", required=True, help="Comma-separated name=path (or just path) entries.")
     ap.add_argument("--max_rows", type=int, default=0, help="Random sample size per file; 0 = all rows.")
     ap.add_argument("--batch_size", type=int, default=256)

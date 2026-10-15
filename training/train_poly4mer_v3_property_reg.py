@@ -512,7 +512,7 @@ def main():
                     help="Comma-separated SMILES-only files; their seq_acc selects the best checkpoint.")
     ap.add_argument("--val_labeled", default=None,
                     help="Optional labeled files; per-property relative error is printed (not used for selection).")
-    ap.add_argument("--init_recon_ckpt", default=os.path.join(REPO_DIR, "poly4mer_v3.ckpt"),
+    ap.add_argument("--init_recon_ckpt", default=os.path.join(REPO_DIR, "checkpoint", "poly4mer_v3.ckpt"),
                     help="Initial weights for all networks incl. property heads (default: poly4mer_v3.ckpt).")
     ap.add_argument("--fresh_heads", action="store_true",
                     help="Do not load property heads from --init_recon_ckpt; start them random and "

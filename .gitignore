@@ -17,3 +17,6 @@ runs/
 
 # Inverse-design run outputs
 results/
+
+# property-prediction output
+predictions.csv
