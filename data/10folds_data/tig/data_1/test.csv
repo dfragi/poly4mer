@@ -1,0 +1,24 @@
+smiles_names,smiles_canonicalized,thickness,flux,tig
+pp,*CC(*)C,3.3,25,113
+pp,*CC(*)C,3.3,75,17
+pmma,*CC(*)(C)C(=O)OC,10.0,50,47
+ps,*CC(*)c1ccccc1,6.0,50,65
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.0,35,209
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,70,31
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,3.5,50,72
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,1.6,75,29
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,75,32
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,120
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,30,276
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,40,166
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,35,151
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,50,88
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,100,26
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,50,213
+pbi,*c1ccc(-c2nc3ccc(-c4ccc5[nH]c(*)nc5c4)cc3[nH]2)cc1,12.5,100,108
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,35,294
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,100,129
+bpa ep,*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,1.6,50,102
+ppsu,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,12.5,100,22
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,6.0,50,67
+cpvc,*CC(Cl)C(Cl)C(*)Cl,6.0,50,538

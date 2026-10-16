@@ -1,0 +1,1 @@
+best_lr=0.0001 best_epoch=2 train_rel=0.206204 test_rel=0.256310

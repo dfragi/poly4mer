@@ -67,6 +67,9 @@ Download the following from our [HuggingFace mirror](https://huggingface.co/fish
   - `smi-ted-Light_40.pt`
 - *Optional*, monotone Tig and pHRR heads (40 files, 126 MB) → `poly4mer_monotone/checkpoint/`
   - see [`poly4mer_monotone/README.md`](poly4mer_monotone/README.md) for the sub-folder layout
+- *Optional*, the 40 per-fold property heads (126 MB) → `checkpoint/fire_property_heads/<property>/`
+  - `fold_0.ckpt` .. `fold_9.ckpt` for each of `tig`, `pkhrr`, `sea`, `co`; needed only to
+    reproduce the cross-validation tables, not for prediction or design
 
 Both files are ignored by git. After downloading, the layout should look like:
 
@@ -87,9 +90,13 @@ poly4mer/
     |-- fire_property_prediction_monotone.py
     |-- run_property_prediction_monotone.sh
     |-- README.md
+|-- data/
+    |-- 10folds_data/
+        |-- tig/ pkhrr/ sea/ co/      data_0 .. data_9, each with train.csv + test.csv
 |-- training/
     |-- train_poly4mer_v3_property_reg.py
     |-- train_property_predictor_finetune.py
+|-- evaluate_fire_prediction_heads.py
 |-- fire_property_prediction_V3.py
 |-- fire_inverse_design_v3.py
 |-- evaluate_reconstruction_v3.py
@@ -220,6 +227,39 @@ This reports exact match, token accuracy, validity, same-molecule rate, and how 
 `training/train_property_predictor_finetune.py` fine-tunes only the property heads on labeled
 data with the encoder frozen. Both read `checkpoint/poly4mer_v3.ckpt` by default. See the
 docstring at the top of each script for the expected data format.
+
+## Reproducing the cross-validation tables
+
+`data/10folds_data/` carries the 10-fold experimental splits for all four properties, the
+same ones that selected the heads bundled in `poly4mer_v3.ckpt`. tig and pHRR have 228 rows
+each with thickness and flux; SEA and CO are the per-polymer averaged sets, 44 and 32 rows,
+and carry no test conditions because those heads take the latent alone.
+
+Score the shipped per-fold heads:
+```bash
+python evaluate_fire_prediction_heads.py --csv folds.csv
+```
+This prints, per property, the full per-fold table of train and test relative error, the mean
+over the best 5 folds, the mean over all 10, and the best overall relative error with the fold
+that achieved it. Where a head ships with its recorded result the script prints both so the
+two can be compared.
+
+Re-run the training that produced them:
+```bash
+python training/train_property_predictor_finetune.py --cv --out_dir runs/cv
+python training/train_property_predictor_finetune.py --cv --properties tig --cv_folds 8 --out_dir runs/tig8
+```
+`--cv` sweeps the per-property learning-rate grid on each fold and keeps the epoch with the
+lowest error on that fold's test rows, starting every head from the one already in the
+checkpoint. The per-property grids, epoch budgets and batch sizes are in `CV_RECIPE` near the
+top of that file.
+
+> **Two caveats when quoting these numbers.** The epoch and learning rate are selected on the
+> same test fold the error is then read from, so per-fold test errors are optimistically
+> biased. And "best overall relative error" scores each head on the entire property set,
+> roughly 90% of which it trained on, so it is optimistic by construction; it is reported
+> because it is the criterion that picked the shipped heads, not as an estimate of
+> generalization. Prefer the all-10 mean when a single number is needed.
 
 ## Monotone property heads (optional)
 

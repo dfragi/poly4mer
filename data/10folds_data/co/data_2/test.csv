@@ -1,0 +1,4 @@
+smiles_canonicalized,CO
+*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,0.0725
+*Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=O)cc2)cc1,0.155
+*c1cccc(Oc2ccc(-n3c(=O)c4cc5c(=O)n(*)c(=O)c5cc4c3=O)cc2)c1,0.005

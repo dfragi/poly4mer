@@ -29,6 +29,23 @@ Loss
 Targets are standardized. Missing labels (NaN) are masked per property, so a
 row may carry only some of the four properties.
 
+Reproduction mode (--cv)
+------------------------
+With --cv the script instead reproduces the 10-fold experimental cross-validation that
+produced the heads bundled in poly4mer_v3.ckpt, reading data/10folds_data/<property>/.
+That protocol differs from phase-I fine-tuning in four ways, so it is a separate path:
+
+  * the loss is the mean RELATIVE error in physical units, not MSE on standardized targets
+  * a grid of learning rates is swept per fold and the best one kept
+  * the epoch is chosen by the lowest error on that fold's own test rows
+  * every head starts from the corresponding head already in the checkpoint
+
+Points three and four matter when reporting. Selecting the epoch on the test fold means
+the per-fold test error is optimistically biased, and the "best overall" criterion that
+chose the shipped heads scores each head on the whole property set, roughly 90% of which
+it trained on. Both numbers are reproduced here so the selection is auditable, not
+because either estimates generalization.
+
 Standardization statistics
 --------------------------
 The heads only make sense together with the statistics they were trained with.
@@ -230,6 +247,159 @@ def fmt_metrics(m, props):
 # Main
 # =============================================================================
 
+# ---------------------------------------------------------------------------
+# Reproduction of the 10-fold experimental cross-validation (--cv)
+# ---------------------------------------------------------------------------
+
+# Per-property recipe of the runs that selected the heads shipped in the checkpoint.
+# grid order matters: the sweep keeps the first learning rate that attains the best
+# test error, so a different order can pick a different winner on ties.
+CV_RECIPE = {
+    "tig":   dict(lr_grid=[1e-4, 5e-5, 1e-5, 5e-6, 1e-6], epochs=5000, batch_size=32),
+    "pkhrr": dict(lr_grid=[1e-2, 5e-3, 1e-3, 5e-4, 1e-4, 5e-5, 1e-5, 5e-6], epochs=2000, batch_size=64),
+    "sea":   dict(lr_grid=[1e-2, 5e-3, 1e-3, 5e-4, 1e-4, 5e-5, 1e-5, 5e-6], epochs=2000, batch_size=32),
+    "co":    dict(lr_grid=[1e-2, 5e-3, 1e-3, 5e-4, 1e-4, 5e-5, 1e-5, 5e-6], epochs=2000, batch_size=32),
+}
+# column holding the target in each property's fold CSVs
+CV_TARGET = {"tig": "tig", "pkhrr": "pkhrr", "sea": "SEA", "co": "CO"}
+
+
+def _parse_folds(spec):
+    out = []
+    for part in str(spec).split(","):
+        part = part.strip()
+        if not part:
+            continue
+        if "-" in part:
+            a, b = part.split("-")
+            out += list(range(int(a), int(b) + 1))
+        else:
+            out.append(int(part))
+    return sorted(set(out))
+
+
+def _mean_rel(pred, y):
+    m = y.abs() > 1e-12
+    return (torch.abs(pred[m] - y[m]) / torch.abs(y[m])).mean()
+
+
+def run_cv(args, props, device):
+    """Re-run the 10-fold sweep that produced the per-fold heads."""
+    import pandas as pd
+    from torch.utils.data import DataLoader, TensorDataset
+
+    ckpt_path = args.encoder_checkpoint or args.checkpoint
+    print(f">> encoder and initial heads from {os.path.basename(ckpt_path)}")
+    ck = torch.load(ckpt_path, map_location="cpu", weights_only=False, mmap=True)
+    smi_ted, A, enc = load_frozen_encoder(ck, device)
+    stats = {k: torch.as_tensor(v, dtype=torch.float32, device=device)
+             for k, v in ck["property_stats"].items()}
+    thk_m, thk_s = stats["thk_mean"].reshape(()), stats["thk_std"].reshape(())
+    flx_m, flx_s = stats["flux_mean"].reshape(()), stats["flux_std"].reshape(())
+    y_mean, y_std = stats["y_mean"].view(-1), stats["y_std"].view(-1)
+
+    folds = _parse_folds(args.cv_folds)
+    summary = {}
+
+    for prop in props:
+        k_idx = PROPERTY_NAMES.index(prop)
+        rec = dict(CV_RECIPE[prop])
+        if args.cv_lr_grid:
+            rec["lr_grid"] = [float(x) for x in args.cv_lr_grid.split(",")]
+        if args.cv_epochs:
+            rec["epochs"] = args.cv_epochs
+        if args.cv_batch_size:
+            rec["batch_size"] = args.cv_batch_size
+        ddir = os.path.join(args.cv_data_dir, prop)
+        if not os.path.isdir(ddir):
+            print(f"!! no fold data for {prop} at {ddir}, skipped")
+            continue
+        init_sd = {k: v.to(device) for k, v in ck["property_regressors"][prop].items()}
+        in_dim = 770 if PROP_USES_THK_FLUX[prop] else 768
+        tcol = CV_TARGET[prop]
+        out_root = os.path.join(args.out_dir, prop)
+        os.makedirs(out_root, exist_ok=True)
+        print(f"\n=== {prop}: {len(folds)} folds, lrs {rec['lr_grid']}, "
+              f"{rec['epochs']} epochs, batch {rec['batch_size']} ===", flush=True)
+
+        def make_xy(df):
+            df = df.copy()
+            cols = ["thickness", "flux", tcol] if PROP_USES_THK_FLUX[prop] else [tcol]
+            for c in cols:
+                df[c] = pd.to_numeric(df[c], errors="coerce")
+            df = df.dropna(subset=["smiles_canonicalized"] + cols).reset_index(drop=True)
+            smis = df["smiles_canonicalized"].astype(str).tolist()
+            z = torch.cat([encode(smis[i:i + args.embed_batch_size], smi_ted, A, enc, device)
+                           for i in range(0, len(smis), args.embed_batch_size)])
+            y = torch.tensor(df[tcol].values, dtype=torch.float32, device=device).view(-1, 1)
+            if not PROP_USES_THK_FLUX[prop]:
+                return z, y
+            thk = torch.tensor(df["thickness"].values, dtype=torch.float32, device=device).view(-1, 1)
+            flx = torch.tensor(df["flux"].values, dtype=torch.float32, device=device).view(-1, 1)
+            return torch.cat([z, (thk - thk_m) / thk_s, (flx - flx_m) / flx_s], dim=-1), y
+
+        rows = []
+        for fold in folds:
+            tr = pd.read_csv(os.path.join(ddir, f"data_{fold}", "train.csv"))
+            te = pd.read_csv(os.path.join(ddir, f"data_{fold}", "test.csv"))
+            Xtr, ytr = make_xy(tr)
+            Xte, yte = make_xy(te)                      # embedded once, reused across lrs
+
+            best = dict(test_rel=float("inf"), train_rel=float("nan"), lr=None, epoch=-1, state=None)
+            for lr in rec["lr_grid"]:
+                head = build_regressor(in_dim).to(device)
+                head.load_state_dict(init_sd)
+                opt = torch.optim.Adam(head.parameters(), lr=lr, weight_decay=args.wd)
+                loader = DataLoader(TensorDataset(Xtr, ytr), batch_size=rec["batch_size"], shuffle=True)
+
+                @torch.no_grad()
+                def rel(X, y):
+                    head.eval()
+                    return _mean_rel(head(X).view(-1, 1) * y_std[k_idx] + y_mean[k_idx], y).item()
+
+                b = dict(te=float("inf"), tr=float("nan"), ep=-1, state=None)
+                for ep in range(rec["epochs"]):
+                    head.train()
+                    for xb, yb in loader:
+                        opt.zero_grad()
+                        loss = _mean_rel(head(xb).view(-1, 1) * y_std[k_idx] + y_mean[k_idx], yb)
+                        loss.backward()
+                        opt.step()
+                    tr_e, te_e = rel(Xtr, ytr), rel(Xte, yte)
+                    if te_e < b["te"]:                  # epoch selected on the test fold
+                        b = dict(te=te_e, tr=tr_e, ep=ep,
+                                 state={k: v.detach().cpu().clone() for k, v in head.state_dict().items()})
+                print(f"   fold {fold}  lr={lr:.0e}: best test_rel={100*b['te']:6.2f}% "
+                      f"(ep{b['ep']}, train {100*b['tr']:.2f}%)", flush=True)
+                if b["te"] < best["test_rel"]:
+                    best = dict(test_rel=b["te"], train_rel=b["tr"], lr=lr, epoch=b["ep"], state=b["state"])
+
+            torch.save(best["state"], os.path.join(out_root, f"fold_{fold}.ckpt"))
+            with open(os.path.join(out_root, f"fold_{fold}.txt"), "w") as f:
+                f.write(f"best_lr={best['lr']} best_epoch={best['epoch']} "
+                        f"train_rel={best['train_rel']:.6f} test_rel={best['test_rel']:.6f}\n")
+            rows.append(dict(fold=fold, n_train=len(ytr), n_test=len(yte), lr=best["lr"],
+                             epoch=best["epoch"], train_rel=100 * best["train_rel"],
+                             test_rel=100 * best["test_rel"]))
+            print(f"   -> fold {fold}: lr={best['lr']:.0e} ep={best['epoch']} "
+                  f"train={100*best['train_rel']:.2f}% test={100*best['test_rel']:.2f}%", flush=True)
+
+        if rows:
+            t = np.array([r["test_rel"] for r in rows])
+            top = np.argsort(t)[:5]
+            summary[prop] = dict(per_fold=rows, top5_folds=sorted(int(rows[i]["fold"]) for i in top),
+                                 top5_mean=float(t[top].mean()), all_mean=float(t.mean()))
+            print(f"   best-5 {summary[prop]['top5_folds']}: {summary[prop]['top5_mean']:.2f}%   "
+                  f"all-{len(t)} mean {summary[prop]['all_mean']:.2f}%")
+            with open(os.path.join(out_root, "summary.json"), "w") as f:
+                json.dump(summary[prop], f, indent=1)
+
+    print("\n>> heads written under", args.out_dir)
+    print(">> score them with evaluate_fire_prediction_heads.py --heads_dir " + args.out_dir)
+    return summary
+
+
+
 def main():
     ap = argparse.ArgumentParser(description="Phase I: fine-tune the property heads on labeled data with the encoder frozen.")
     ap.add_argument("--train_labeled", default=None, help="Comma-separated labeled files (required unless --eval_only).")
@@ -255,14 +425,23 @@ def main():
     ap.add_argument("--latent_cache", default=None, help="Latent cache file (default: <out_dir>/latent_cache.pt).")
     ap.add_argument("--save_full", action="store_true", help="Also write a full drop-in checkpoint with the new heads.")
     ap.add_argument("--eval_only", action="store_true", help="Only evaluate the checkpoint's heads on --val_labeled.")
+    cv = ap.add_argument_group("reproduction of the 10-fold experimental cross-validation")
+    cv.add_argument("--cv", action="store_true",
+                    help="Reproduce the 10-fold runs that selected the heads in the checkpoint.")
+    cv.add_argument("--cv_data_dir", default=os.path.join(REPO_DIR, "data", "10folds_data"))
+    cv.add_argument("--cv_folds", default="0-9", help="Folds to run, e.g. '0-9' or '8' or '0,3,8'.")
+    cv.add_argument("--cv_lr_grid", default=None,
+                    help="Override the per-property learning-rate grid, comma-separated.")
+    cv.add_argument("--cv_epochs", type=int, default=None, help="Override the per-property epoch budget.")
+    cv.add_argument("--cv_batch_size", type=int, default=None, help="Override the per-property batch size.")
     args = ap.parse_args()
 
     props = [p.strip() for p in args.properties.split(",") if p.strip()]
     for p in props:
         if p not in PROPERTY_NAMES:
             ap.error(f"unknown property {p!r}; choose from {PROPERTY_NAMES}")
-    if not args.eval_only and not args.train_labeled:
-        ap.error("--train_labeled is required unless --eval_only")
+    if not args.eval_only and not args.cv and not args.train_labeled:
+        ap.error("--train_labeled is required unless --eval_only or --cv")
     if args.eval_only and not args.val_labeled:
         ap.error("--eval_only needs --val_labeled")
 
@@ -271,6 +450,8 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f">> Device: {device}")
     os.makedirs(args.out_dir, exist_ok=True)
+    if args.cv:
+        return run_cv(args, props, device)
     cache_path = args.latent_cache or os.path.join(args.out_dir, "latent_cache.pt")
 
     # ---- checkpoint(s) -----------------------------------------------------

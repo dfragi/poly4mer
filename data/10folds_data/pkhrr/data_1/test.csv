@@ -1,0 +1,24 @@
+smiles_names,smiles_canonicalized,thickness,flux,pkhrr
+pp,*CC(*)C,3.3,25,1373
+pp,*CC(*)C,3.3,75,2630
+pmma,*CC(*)(C)C(=O)OC,10.0,50,826
+ps,*CC(*)c1ccccc1,6.0,50,1294
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.0,35,523
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,70,2019
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,3.5,50,1226
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,1.6,75,379
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,75,378
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,390
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,30,350
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,40,399
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,35,96
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,50,149
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,100,272
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,50,46
+pbi,*c1ccc(-c2nc3ccc(-c4ccc5[nH]c(*)nc5c4)cc3[nH]2)cc1,12.5,100,55
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,35,57
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,100,186
+bpa ep,*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,1.6,50,155
+ppsu,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,12.5,100,261
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,6.0,50,74
+cpvc,*CC(Cl)C(Cl)C(*)Cl,6.0,50,87
