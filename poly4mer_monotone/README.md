@@ -45,14 +45,10 @@ returns the value at 20 or at 100.
 The MLP itself has the same shape as the plain property head, 770 inputs and five layers, so
 the only difference is how its output is consumed.
 
-## Head variants
+## Head checkpoints
 
-| Variant | What was fine-tuned |
-|---|---|
-| `full_head` | every layer of the MLP |
-| `last_two_linear` | only the last two linear layers |
-
-Each variant ships **10 checkpoints per property**, one per fold of a 10-fold split of the
+One variant ships, `last_two_linear`, in which only the last two linear layers of the MLP were
+fine-tuned. There are **10 checkpoints per property**, one per fold of a 10-fold split of the
 experimental rows. Select one with `--fold`, or pass `--ensemble` to average across every fold
 present. For a polymer outside the experimental set the ensemble is the better choice, since
 no single fold has a claim to being the right one.
@@ -66,10 +62,8 @@ Download the monotone heads from our
 poly4mer_monotone/
 |-- checkpoint/
     |-- tig/
-        |-- full_head/          fold_0_best_fp32.ckpt ... fold_9_best_fp32.ckpt
         |-- last_two_linear/    fold_0_best_fp32.ckpt ... fold_9_best_fp32.ckpt
     |-- phrr/
-        |-- full_head/          fold_0_best_fp32.ckpt ... fold_9_best_fp32.ckpt
         |-- last_two_linear/    fold_0_best_fp32.ckpt ... fold_9_best_fp32.ckpt
 |-- fire_property_prediction_monotone.py
 |-- run_property_prediction_monotone.sh
@@ -78,7 +72,7 @@ poly4mer_monotone/
 |-- README.md
 ```
 
-40 files, about 126 MB in total. The folders ship empty, kept in git by `.gitkeep`; the
+20 files, about 63 MB in total. The folders ship empty, kept in git by `.gitkeep`; the
 weights themselves are ignored.
 
 The encoder comes from `../checkpoint/poly4mer_v3.ckpt`, which you will already have for the
@@ -123,7 +117,6 @@ Useful options:
 
 | Option | Meaning |
 |---|---|
-| `--variant` | `last_two_linear` (default) or `full_head` |
 | `--fold N` | use fold N only |
 | `--ensemble` | average every fold present |
 | `--properties` | `tig`, `pkhrr`, or both (default) |
@@ -131,7 +124,7 @@ Useful options:
 | `--canonicalize` | rewrite inputs into canonical bare-star form first |
 | `--csv FILE` | write the predictions out |
 
-Environment variables accepted by the shell script: `PYTHON`, `OUT_CSV`, `VARIANT`, `FOLD`,
+Environment variables accepted by the shell script: `PYTHON`, `OUT_CSV`, `FOLD`,
 `ENSEMBLE`, `FLUX_SWEEP`.
 
 ## How to report accuracy
@@ -143,7 +136,7 @@ Treat this carefully. Two numbers exist for these heads and they say different t
 | Epoch and learning rate chosen on the test fold | 18.2% | 15.3% |
 | Leave-one-fold-out, leakage-free | 22.1% | 19.1% |
 
-Mean absolute relative error, `last_two_linear`.
+Mean absolute relative error.
 
 The first row is optimistic: the training epoch and learning rate were picked by looking at
 the same fold the error is then measured on. Under leave-one-fold-out selection, which never

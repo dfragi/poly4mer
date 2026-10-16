@@ -92,11 +92,15 @@ prop, a_path, b_path = sys.argv[1], sys.argv[2], sys.argv[3]
 a = pd.read_csv(a_path).query("property == @prop").set_index("fold")
 b = pd.read_csv(b_path).query("property == @prop").set_index("fold")
 common = sorted(set(a.index) & set(b.index))
-print(f"{'fold':>5}{'bundled %':>12}{'retrained %':>14}{'diff':>9}   lr bundled / retrained")
+has_lr = 'best_lr' in b.columns
+print(f"{'fold':>5}{'bundled %':>12}{'retrained %':>14}{'diff':>9}"
+      + ("   retrained lr / epoch" if has_lr else ""))
 for k in common:
     d = b.loc[k, 'test_rel'] - a.loc[k, 'test_rel']
-    print(f"{k:>5}{a.loc[k,'test_rel']:>12.2f}{b.loc[k,'test_rel']:>14.2f}{d:>+9.2f}"
-          f"   {a.loc[k,'best_lr']:.0e} / {b.loc[k,'best_lr']:.0e}")
+    line = f"{k:>5}{a.loc[k,'test_rel']:>12.2f}{b.loc[k,'test_rel']:>14.2f}{d:>+9.2f}"
+    if has_lr:
+        line += f"   {b.loc[k,'best_lr']:.0e} / {int(b.loc[k,'best_epoch'])}"
+    print(line)
 for label, f in (("bundled", a), ("retrained", b)):
     t = f.loc[common, 'test_rel'].values
     top = np.sort(t)[:min(5, len(t))]

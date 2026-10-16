@@ -12,6 +12,10 @@ held-out test fold in `data/10folds_data/<property>/data_<k>/test.csv`, and repo
   * the best overall relative error: every fold's head scored on the WHOLE property
     set, with the lowest value reported
 
+If a head is accompanied by a `fold_<k>.txt` recording the learning rate, epoch and
+errors it was trained with, those are printed alongside for comparison. The bundled
+heads ship without them; heads written by `--cv` carry them.
+
 The last one needs care. A fold's head has trained on roughly 90% of the rows it is
 then scored on, so the overall error is optimistic by construction. It is the criterion
 that picked the heads bundled in poly4mer_v3.ckpt, and it is reported here so that
@@ -186,12 +190,16 @@ def main():
 
         print(f"\n=== {PRETTY[prop]}   ({len(yall)} rows across the 10 test folds) ===")
         has_rec = "recorded_test_rel" in rows[0]
-        head_fmt = f"{'fold':>5}{'n_tr':>6}{'n_te':>6}{'lr':>9}{'epoch':>7}{'train %':>10}{'test %':>9}{'overall %':>11}"
+        head_fmt = f"{'fold':>5}{'n_tr':>6}{'n_te':>6}"
+        if has_rec:
+            head_fmt += f"{'lr':>9}{'epoch':>7}"
+        head_fmt += f"{'train %':>10}{'test %':>9}{'overall %':>11}"
         print(head_fmt + ("   recorded" if has_rec else ""))
         for r in rows:
-            line = (f"{r['fold']:>5}{r['n_train']:>6}{r['n_test']:>6}"
-                    f"{r.get('best_lr', float('nan')):>9.0e}{r.get('best_epoch', -1):>7}"
-                    f"{r['train_rel']:>10.2f}{r['test_rel']:>9.2f}{r['overall_rel']:>11.2f}")
+            line = f"{r['fold']:>5}{r['n_train']:>6}{r['n_test']:>6}"
+            if has_rec:
+                line += f"{r['best_lr']:>9.0e}{r['best_epoch']:>7}"
+            line += f"{r['train_rel']:>10.2f}{r['test_rel']:>9.2f}{r['overall_rel']:>11.2f}"
             if has_rec:
                 d = r["test_rel"] - r["recorded_test_rel"]
                 line += f"   {r['recorded_test_rel']:7.2f} ({d:+.3f})"

@@ -26,12 +26,9 @@ stops it predicting a longer ignition time at a higher flux. The monotone head i
 Requested fluxes are clamped into the knot range, so a query at 10 or 150 kW/m^2
 returns the value at 20 or 100.
 
-Two head variants ship per property:
-
-    full_head          every layer of the MLP was fine-tuned
-    last_two_linear    only the last two linear layers were fine-tuned
-
-Both are per-fold: 10 checkpoints each, from a 10-fold split of the experimental rows.
+One head variant ships per property, `last_two_linear`, in which only the last two
+linear layers were fine-tuned. It is per-fold: 10 checkpoints, from a 10-fold split
+of the experimental rows.
 Pick one with --fold, or pass --ensemble to average the predictions of all folds
 present, which is the more honest choice for a polymer outside the dataset.
 
@@ -41,7 +38,7 @@ INPUT FORM. pSMILES must be RDKit-canonical with bare '*' attachment points. Pas
 Examples (run from inside this folder):
     python fire_property_prediction_monotone.py --smiles '*CC(*)C' --thickness 3 --flux 50
     python fire_property_prediction_monotone.py --init_file ../example_pSMILES_homo.txt \
-        --all --variant last_two_linear --ensemble --csv monotone_predictions.csv
+        --all --ensemble --csv monotone_predictions.csv
     python fire_property_prediction_monotone.py --smiles '*CC(*)C' --thickness 3 \
         --flux_sweep 20,100,5 --csv sweep.csv
 """
@@ -150,8 +147,7 @@ def get_parser():
     p.add_argument("--properties", default="tig,pkhrr",
                    help="Which monotone properties to predict. SEA and CO have no monotone heads.")
     p.add_argument("--variant", default="last_two_linear",
-                   choices=["last_two_linear", "full_head"],
-                   help="Which head variant to load.")
+                   help="Head variant sub-folder under --heads_dir/<property>/.")
     p.add_argument("--fold", type=int, default=0, help="Which fold checkpoint to use (0-9).")
     p.add_argument("--ensemble", action="store_true",
                    help="Average over every fold checkpoint present instead of using one.")

@@ -8,7 +8,7 @@
 # Usage (from anywhere):
 #   bash run_property_prediction_monotone.sh
 #   PYTHON=/path/to/python bash run_property_prediction_monotone.sh
-#   VARIANT=full_head FOLD=3 bash run_property_prediction_monotone.sh
+#   FOLD=3 ENSEMBLE=0 bash run_property_prediction_monotone.sh
 #   FLUX_SWEEP=20,100,10 bash run_property_prediction_monotone.sh   # check monotonicity
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -21,9 +21,7 @@ OUT_CSV=${OUT_CSV:-monotone_predictions.csv}
 THICKNESS=3.0      # mm
 FLUX=50.0          # kW/m^2
 
-# which head variant, and which fold checkpoint
-#   full_head        every layer fine-tuned
-#   last_two_linear  only the last two linear layers fine-tuned
+# head variant sub-folder; only last_two_linear ships
 VARIANT=${VARIANT:-last_two_linear}
 
 # ENSEMBLE=1 averages every fold present, which is the safer choice for a polymer
