@@ -105,6 +105,8 @@ poly4mer/
 |-- example_pSMILES_homo.txt
 |-- run_property_prediction.sh
 |-- run_design.sh
+|-- run_demo_property_heads.sh
+|-- example_pSMILES_gavit.txt
 |-- requirements.txt
 ```
 
@@ -235,7 +237,15 @@ same ones that selected the heads bundled in `poly4mer_v3.ckpt`. tig and pHRR ha
 each with thickness and flux; SEA and CO are the per-polymer averaged sets, 44 and 32 rows,
 and carry no test conditions because those heads take the latent alone.
 
-Score the shipped per-fold heads:
+Run the whole thing as a demo, which scores the bundled heads, re-trains one property's
+10 folds with the same recipe, and prints the two side by side:
+```bash
+./run_demo_property_heads.sh                       # ~15 min, re-trains CO
+DEMO_FOLDS=0,1,2 ./run_demo_property_heads.sh      # ~5 min
+SKIP_TRAIN=1 ./run_demo_property_heads.sh          # scoring only, under a minute
+```
+
+Score the shipped per-fold heads on their own:
 ```bash
 python evaluate_fire_prediction_heads.py --csv folds.csv
 ```
@@ -272,6 +282,28 @@ the same file as the main model; only the heads differ, and SEA and CO are not c
 cd poly4mer_monotone
 ./run_property_prediction_monotone.sh
 ```
+
+## Inverse design examples
+
+`run_design.sh` runs five worked examples and prints every design it finds:
+
+| Seed | lr | Weights tig/pHRR/SEA/CO | Designs |
+|---|---:|---|---|
+| PMMA | 0.3 | 0.2/0.6/0.1/0.1 | 2 linear |
+| PP | 1.0 | 0.2/0.6/0.1/0.1 | 2 linear |
+| NYLON | 0.3 | 0.2/0.6/0.1/0.1 | 2 linear |
+| BPA-ether | 0.1 | 0.2/0.6/0.1/0.1 | 1 linear |
+| PEI-N | 0.01 | 1/1/1/1 | 1 linear, 1 branch point |
+
+```bash
+./run_design.sh
+ONLY="PMMA PP" ./run_design.sh        # a subset
+MAX_EPOCHS=500 ./run_design.sh        # quick smoke test, finds fewer designs
+```
+
+PEI-N runs at equal weights deliberately. It already sits near the objective's optimum on
+pHRR and SEA, so those terms supply almost no gradient and weighting them heavily starves
+the search. Equal weights let the CO term, which has the most headroom, drive the path.
 
 Use them when a prediction feeds an optimizer or a screening loop and a non-physical flux
 trend would be costly. On held-out polymers they are **level with**, not better than, the

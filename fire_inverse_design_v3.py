@@ -98,7 +98,9 @@ PROP_RANGE = {"tig": (11.0, 898.0), "pkhrr": (22.0, 2748.0),
               "sea": (0.001, 0.149), "co": (0.01, 0.45)}
 
 SPECIAL = ("<pad>", "<unk>", "<s>", "</s>", "<bos>", "<eos>", "<mask>", "<cls>", "<sep>")
-N_STARS_VALID = 2          # a linear repeat unit has exactly two attachment points
+N_STARS_MIN = 2            # 2 = linear repeat unit, 3 = branch point, 4 or 6 = network
+                           # former; all occur in the experimental set. 0 or 1 cannot
+                           # propagate a chain and is rejected.
 
 
 def canonical_psmiles(s):
@@ -292,6 +294,7 @@ def main(config):
 
         if (canon_smiles is not None and canon_smiles != seed_canon
                 and canon_smiles not in designs
+                and count_stars(canon_smiles) >= N_STARS_MIN
                 and (config.keep_unphysical or config.clamp or raw["pkhrr"].item() >= 0)):
             designs[canon_smiles] = (ep, {n: raw[n].item() for n in NAMES})
 
@@ -323,15 +326,15 @@ def main(config):
     # ------------------------------------------------------- 7. Report --
     seed_props = {n: save_fire_props[0][k] for k, n in enumerate(NAMES)}
     new = sorted(designs.items(), key=lambda kv: kv[1][0])
-    n_valid = sum(1 for cs, _ in new if count_stars(cs) == N_STARS_VALID)
+    n_linear = sum(1 for cs, _ in new if count_stars(cs) == 2)
 
     print(f"\n### {config.name}  lr={config.lr_start:g}  clamp={config.clamp}   "
-          f"{len(new)} unique new pSMILES, {n_valid} with exactly {N_STARS_VALID} stars")
+          f"{len(new)} design(s): {n_linear} linear, {len(new) - n_linear} branched")
     print("    seed props (predicted): "
           + "  ".join(f"{n} {seed_props[n]:.4g}" for n in NAMES))
     for k, (cs, (ep, pr)) in enumerate(new, 1):
         stars = count_stars(cs)
-        flag = "valid" if stars == N_STARS_VALID else f"stars={stars}"
+        flag = "linear" if stars == 2 else f"{stars}-star"
         print(f"    d{k}  ep{ep:>5}  [{flag:>7}]  {cs}  "
               + "  ".join(f"{n} {pr[n]:.4g}" for n in NAMES))
 
@@ -386,7 +389,7 @@ def main(config):
             "coef": {"tig": config.c_tig, "pkhrr": config.c_qpua,
                      "sea": config.c_sea, "co": config.c_co},
             "designs": [{"ep": ep, "smi": cs, "stars": count_stars(cs),
-                         "valid": count_stars(cs) == N_STARS_VALID, **pr}
+                         "linear": count_stars(cs) == 2, **pr}
                         for cs, (ep, pr) in new],
         }, f, indent=2)
 
