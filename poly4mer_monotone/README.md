@@ -1,5 +1,13 @@
 # poly4mer monotone heads
 
+![Monotone spline head.](Monotone_architecture_header.png)
+
+*The monotone spline head in three steps. **1** The MLP is evaluated at 17 fixed flux knots; its
+raw output is free to violate the physics, and the red points mark where it does. **2** A running
+minimum (Tig) or maximum (pHRR) across the knots removes every violation, leaving a monotone
+sequence. **3** The prediction at the requested flux is a linear interpolation between the two
+bracketing knots. Source figure: [`Monotone_architecture_header.pdf`](Monotone_architecture_header.pdf).*
+
 Property predictors for time to ignition (Tig) and peak heat release rate (pHRR) that are
 **hard-monotone in heat flux**: Tig can only decrease as the incident flux rises, pHRR can
 only increase. The constraint is structural rather than a penalty term, so it holds for every
@@ -27,6 +35,9 @@ For a latent `z` and a thickness, the head does not map straight to a number. In
    for pHRR, which forces the knot sequence to be monotone;
 3. linearly interpolates between the two knots bracketing the requested flux;
 4. de-standardizes to physical units.
+
+The figure at the top of this page shows the three steps on a real head, with the physics
+violations in the raw output marked in red and removed by step 2.
 
 Queries outside 20 to 100 kW/m² are clamped to the end knots, so a request at 10 or at 150
 returns the value at 20 or at 100.
@@ -62,6 +73,8 @@ poly4mer_monotone/
         |-- last_two_linear/    fold_0_best_fp32.ckpt ... fold_9_best_fp32.ckpt
 |-- fire_property_prediction_monotone.py
 |-- run_property_prediction_monotone.sh
+|-- Monotone_architecture_header.pdf
+|-- Monotone_architecture_header.png
 |-- README.md
 ```
 
