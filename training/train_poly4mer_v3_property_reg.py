@@ -33,8 +33,8 @@ smi-ted-Light (IBM) is used as a FROZEN tokenizer + token embedder.
 
 Loss (per optimizer step, "joint" mode)
 ---------------------------------------
-Each step draws one batch of SMILES-only data (v1) and one batch of labeled
-data (v2 FDS-simulated + experimental). With CE = token cross-entropy and
+Each step draws one batch of unlabeled, SMILES-only data and one batch of
+labeled data. With CE = token cross-entropy and
 MSE_emb = MSE between input and reconstructed token embeddings:
 
     loss =  (CE_unlabeled + CE_labeled) / 2                      # reconstruction, cross-entropy
@@ -54,7 +54,7 @@ Data formats
                               (column smiles_canonicalized / smiles).
 --train_labeled / --val_labeled :
     * .smi without header, 10 columns:
-          index name smiles thickness flux tig pkhrr sea co igt   (v2 FDS format)
+          index name smiles thickness flux tig pkhrr sea co igt   (10-column labeled format)
     * .smi with header line, or .csv, containing the columns
           smiles_canonicalized thickness flux tig pkhrr sea co
 Units: thickness mm, flux kW/m^2, tig s, pkhrr kW/m^2, co kg/kg; sea as in the source data.
@@ -130,7 +130,7 @@ PROPERTY_NAMES = ["tig", "pkhrr", "sea", "co"]
 # tig and pkhrr depend on sample thickness and heat flux; sea and co do not.
 PROP_USES_THK_FLUX = {"tig": True, "pkhrr": True, "sea": False, "co": False}
 
-# Column layout of v2_110k_FDS.smi-style files (10 columns, no header).
+# Column layout of the 10-column labeled format (no header).
 V2_COLUMNS = ["index", "name", "smiles_canonicalized", "thickness", "flux",
               "tig", "pkhrr", "sea", "co", "igt"]
 
@@ -237,7 +237,7 @@ def read_property_data(path):
             first = next((ln.split() for ln in f if ln.strip()), [])
         if "smiles_canonicalized" in first:      # .smi with a header line
             df = pd.read_csv(path, sep=r"\s+", engine="python")
-        else:                                    # v2 FDS format, no header
+        else:                                    # 10-column labeled format, no header
             df = pd.read_csv(path, sep=r"\s+", header=None, engine="python", names=V2_COLUMNS)
 
     required = ["smiles_canonicalized", "thickness", "flux"] + PROPERTY_NAMES

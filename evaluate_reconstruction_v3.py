@@ -18,7 +18,7 @@ with the input. Reported per file:
                 to round-trip character for character.
 
 Input files: .smi / .txt (one pSMILES per line, first whitespace token), the 10-column
-v2 format (pSMILES in the third column, detected automatically), or comma-separated
+labeled format (pSMILES in the third column, detected automatically), or comma-separated
 files with a smiles_canonicalized / smiles column (any extension). Use --max_rows N to
 evaluate a random sample.
 
@@ -29,8 +29,8 @@ inputs with canonical_psmiles() first; the script then also reports how many inp
 had to be changed. Use the same function on anything you feed to the encoder.
 
 Example (run from inside this folder):
-    python evaluate_reconstruction_v3.py --files exp=../data/experimental_data.smi,v2=../data/v2_110k_FDS.smi
-    python evaluate_reconstruction_v3.py --files v1=../data/v1_training_data.smi --max_rows 100000
+    python evaluate_reconstruction_v3.py --files homo=example_pSMILES_homo.txt
+    python evaluate_reconstruction_v3.py --files mine=/path/to/your.smi --max_rows 100000
 """
 import argparse, csv, os, random, sys, time
 import torch
