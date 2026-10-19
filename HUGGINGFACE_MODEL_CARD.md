@@ -41,14 +41,24 @@ the same representation supports forward prediction and gradient-based design in
 
 ## Files
 
-| File | Size | Destination in the repo |
-|---|---:|---|
-| `poly4mer_v3.ckpt` | 3.7 GB | `checkpoint/` |
-| `smi-ted-Light_40.pt` | 1.1 GB | `smi_ted_light/` |
-| `fire_property_heads/<property>/fold_{0..9}.ckpt` | 126 MB | `checkpoint/` — optional, for reproducing the cross-validation tables |
-| `poly4mer_monotone/<property>/last_two_linear/fold_{0..9}.ckpt` | 63 MB | `poly4mer_monotone/checkpoint/` — optional, see below |
+This repository holds both released versions. v3 lives under `poly4mer_pretrained_v3/`.
 
-Only the first two are needed for prediction, reconstruction or design.
+| Path in this repository | Size | Where it goes in the code repo |
+|---|---:|---|
+| `poly4mer_pretrained_v3/poly4mer_v3.ckpt` | 3.7 GB | `checkpoint/` |
+| `poly4mer_pretrained_v2/smi_ted_light/smi-ted-Light_40.pt` | 1.1 GB | `smi_ted_light/` |
+| `poly4mer_pretrained_v3/tig_10folds/fold_{0..9}_best_fp32.ckpt` | 32 MB | `poly4mer_monotone/checkpoint/tig/last_two_linear/` |
+| `poly4mer_pretrained_v3/phrr_10folds/fold_{0..9}_best_fp32.ckpt` | 32 MB | `poly4mer_monotone/checkpoint/phrr/last_two_linear/` |
+| `poly4mer_pretrained_v3/sea_10folds/fold_{0..9}.ckpt` | 32 MB | `checkpoint/fire_property_heads/sea/` |
+| `poly4mer_pretrained_v3/co_10folds/fold_{0..9}.ckpt` | 32 MB | `checkpoint/fire_property_heads/co/` |
+
+Only the first two are needed for prediction, reconstruction or design. The main checkpoint
+already carries a property head for each of the four properties.
+
+**The per-fold folders hold two different kinds of head.** For tig and pHRR they are the
+**monotone** heads described below, recognisable by the `_best_fp32` suffix. For SEA and CO,
+which have no monotone variant, they are the standard per-fold heads used to reproduce the
+cross-validation tables. The v2 release is under `poly4mer_pretrained_v2/`.
 
 ## What is in `poly4mer_v3.ckpt`
 
@@ -94,7 +104,13 @@ separator does not.
 ```bash
 git clone -b dev https://github.com/fishmoon1234/poly4mer.git && cd poly4mer
 pip install -r requirements.txt
-# place poly4mer_v3.ckpt in checkpoint/ and smi-ted-Light_40.pt in smi_ted_light/
+
+huggingface-cli download fishmoon1234/poly4mer \
+    poly4mer_pretrained_v3/poly4mer_v3.ckpt --local-dir /tmp/p4m
+mv /tmp/p4m/poly4mer_pretrained_v3/poly4mer_v3.ckpt checkpoint/
+huggingface-cli download fishmoon1234/poly4mer \
+    poly4mer_pretrained_v2/smi_ted_light/smi-ted-Light_40.pt --local-dir /tmp/p4m
+mv /tmp/p4m/poly4mer_pretrained_v2/smi_ted_light/smi-ted-Light_40.pt smi_ted_light/
 
 python fire_property_prediction_V3.py --smiles '*CC(*)C' --thickness 3 --flux 50
 ```
@@ -188,15 +204,30 @@ release rate. A trust region on the latent displacement is advisable.
 far below the figures above, around 56%, because the chemistry differs from the training
 distribution.
 
-## Optional: monotone heads
+## Monotone heads for tig and pHRR
 
-The repository also offers alternative tig and pHRR heads that are **hard-monotone in heat
-flux** by construction: tig can only fall as flux rises, pHRR can only rise. The constraint is
-structural, not a penalty, so it holds for every input. The encoder is unchanged.
+`tig_10folds/` and `phrr_10folds/` hold alternative heads that are **hard-monotone in heat
+flux** by construction: tig can only fall as the flux rises, pHRR can only rise. The constraint
+is structural rather than a penalty, so it holds for every input, including polymers far
+outside the data. The encoder is unchanged, so these drop in beside the main checkpoint.
 
-Use them when a prediction feeds an optimizer and a non-physical flux trend would be costly.
-On held-out polymers they are **level with**, not better than, the standard heads under
-leakage-free selection, so the case for them is the guarantee rather than the accuracy.
+The head is not read out directly. The MLP is evaluated at 17 fixed flux knots from 20 to
+100 kW/m², a running minimum (tig) or maximum (pHRR) is taken across them, and the value at
+the requested flux is interpolated between the two bracketing knots. Fluxes outside that range
+are clamped to the end knots.
+
+Ten checkpoints ship per property, one per fold. `--ensemble` averages them, which is the
+safer choice for a polymer outside the experimental set.
+
+```bash
+cd poly4mer_monotone
+./run_property_prediction_monotone.sh
+```
+
+Use them when a prediction feeds an optimizer or a screening loop and a non-physical flux
+trend would be costly. On held-out polymers they are **level with**, not better than, the
+standard heads under leakage-free selection, so the case for them is the guarantee rather than
+the accuracy. SEA and CO have no monotone variant.
 
 ## Citation
 
