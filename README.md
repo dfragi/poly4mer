@@ -61,17 +61,20 @@ The SMI-TED Python package is bundled with this repository under `smi_ted_light/
 
 Download the following from our [HuggingFace mirror](https://huggingface.co/fishmoon1234/poly4mer) and place them at the paths shown:
 
-- Encoder + decoder + property predictors, one bundle (3.7 GB) → `checkpoint/`
-  - `poly4mer_v3.ckpt`
+- **`poly4mer_v3.ckpt`** (3.7 GB) → `checkpoint/`
+  - This is the only v3 checkpoint you need. It carries the encoder, the decoder and
+    **both** property head sets, so the same file serves property prediction, inverse
+    design and the cross-validation reproduction. Every script loads it by default and
+    picks the right head set for the task; see *Two head sets* below.
 - Pretrained SMI-TED encoder (1.1 GB) → `smi_ted_light/`
   - `smi-ted-Light_40.pt`
-- *Optional*, monotone Tig and pHRR heads (40 files, 126 MB) → `poly4mer_monotone/checkpoint/`
+- *Optional*, monotone Tig and pHRR heads (20 files, 63 MB) → `poly4mer_monotone/checkpoint/`
   - see [`poly4mer_monotone/README.md`](poly4mer_monotone/README.md) for the sub-folder layout
 - *Optional*, the 40 per-fold property heads (126 MB) → `checkpoint/fire_property_heads/<property>/`
   - `fold_0.ckpt` .. `fold_9.ckpt` for each of `tig`, `pkhrr`, `sea`, `co`; needed only to
     reproduce the cross-validation tables, not for prediction or design
 
-Both files are ignored by git. After downloading, the layout should look like:
+All weights are ignored by git. After downloading, the layout should look like:
 
 ```
 poly4mer/
