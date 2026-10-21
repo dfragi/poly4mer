@@ -116,7 +116,29 @@ poly4mer/
 |---|---|---|
 | **Encoder module** | SMI-TED token embedder, then `star_encoder`, then the autoencoder encoder | SMI-TED: `smi_ted_light/smi-ted-Light_40.pt`, frozen. The rest: `star_encoder` and `autoencoder_encoder` in `poly4mer_v3.ckpt` |
 | **Decoder module** | autoencoder decoder, then the token predictor | `decoder` and `predictor` in `poly4mer_v3.ckpt` |
-| **Property predictors** | four MLP heads on the latent `z`, for Tig, pHRR, SEA, CO | `property_regressors` and `property_stats` in `poly4mer_v3.ckpt` |
+| **Property predictors** | four MLP heads on the latent `z`, for Tig, pHRR, SEA, CO | `property_regressors` and `property_regressors_selected`, with shared `property_stats`, in `poly4mer_v3.ckpt` |
+
+### Two head sets
+
+The checkpoint carries two sets of property heads. They share the same architecture and the
+same standardization statistics, and differ only in weights.
+
+| Key | What it is | Used by |
+|---|---|---|
+| `property_regressors` | the model's own heads, produced with the rest of the model | the cross-validation reproduction, as its starting point |
+| `property_regressors_selected` | per-property heads chosen by 10-fold cross-validation on the experimental data, one fold per property | property prediction and inverse design, by default |
+
+`--heads selected` (the default) and `--heads joint` switch between them in
+`fire_property_prediction_V3.py` and `fire_inverse_design_v3.py`. Each run prints which set
+it loaded.
+
+The reproduction in `--cv` starts from `property_regressors`, because the selected heads were
+themselves chosen from these same folds; starting from them would be circular. `--cv_init_heads`
+can override that, and warns when it does.
+
+The selection criterion behind `property_regressors_selected` scores each head on the whole
+property set, most of which it trained on. Those selection errors are optimistic and are not
+held-out estimates; see the caveat under the cross-validation section below.
 
 The property predictors consume the **raw** latent `z`. Only thickness and flux are standardized, using the statistics stored alongside the heads:
 

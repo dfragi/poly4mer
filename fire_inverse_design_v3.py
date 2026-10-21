@@ -103,6 +103,24 @@ N_STARS_MIN = 2            # 2 = linear repeat unit, 3 = branch point, 4 or 6 = 
                            # propagate a chain and is rejected.
 
 
+
+def resolve_heads(ck, which, label="heads"):
+    """Pick a head set from a checkpoint that may carry more than one.
+
+    'selected' prefers property_regressors_selected and falls back to property_regressors
+    for older checkpoints that only have the one set.
+    """
+    if which == "selected" and "property_regressors_selected" in ck:
+        print(f">> {label}: property_regressors_selected (cross-validation selected)")
+        return ck["property_regressors_selected"]
+    if which == "selected":
+        print(f">> {label}: property_regressors "
+              f"(this checkpoint carries no selected set)")
+    else:
+        print(f">> {label}: property_regressors (the model's own heads)")
+    return ck["property_regressors"]
+
+
 def canonical_psmiles(s):
     """RDKit-canonical pSMILES with bare '*'; None if the string does not parse.
     '*' is read as a dummy atom, it is not substituted away."""
@@ -146,6 +164,8 @@ def get_parser():
 
     # weights
     p.add_argument("--checkpoint", default=os.path.join(SCRIPT_DIR, "checkpoint", "poly4mer_v3.ckpt"))
+    p.add_argument("--heads", default="selected", choices=["selected", "joint"],
+                   help="Which head set in --checkpoint to use. 'selected' is the cross-validation-selected set and the default; 'joint' is the model's own set, produced with the rest of the model. Ignored when --heads_ckpt names an external file.")
     p.add_argument("--heads_ckpt", default=None,
                    help="Optional separate file holding property_regressors and "
                         "property_stats; by default the heads in --checkpoint are used.")
@@ -191,10 +211,12 @@ def main(config):
         config.heads_ckpt, map_location="cpu", weights_only=False)
     if config.heads_ckpt is not None:
         print(f">> heads: {os.path.basename(config.heads_ckpt)}")
+    src = (hk["property_regressors"] if config.heads_ckpt is not None
+           else resolve_heads(ck, config.heads))
     regressors = {}
     for n in NAMES:
         r = build_regressor(770 if USES_THK_FLUX[n] else 768)
-        r.load_state_dict(hk["property_regressors"][n])
+        r.load_state_dict(src[n])
         regressors[n] = r.to(device)
 
     stats = {k: torch.as_tensor(v, dtype=torch.float32, device=device)

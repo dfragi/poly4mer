@@ -38,7 +38,8 @@ That protocol differs from phase-I fine-tuning in four ways, so it is a separate
   * the loss is the mean RELATIVE error in physical units, not MSE on standardized targets
   * a grid of learning rates is swept per fold and the best one kept
   * the epoch is chosen by the lowest error on that fold's own test rows
-  * every head starts from the corresponding head already in the checkpoint
+  * every head starts from the model's own head in the checkpoint, `property_regressors`,
+    not from `property_regressors_selected`; the latter were chosen from these same folds
 
 Points three and four matter when reporting. Selecting the epoch on the test fold means
 the per-fold test error is optimistically biased, and the "best overall" criterion that
@@ -314,7 +315,13 @@ def run_cv(args, props, device):
         if not os.path.isdir(ddir):
             print(f"!! no fold data for {prop} at {ddir}, skipped")
             continue
-        init_sd = {k: v.to(device) for k, v in ck["property_regressors"][prop].items()}
+        if args.cv_init_heads == "selected" and "property_regressors_selected" in ck:
+            init_src = ck["property_regressors_selected"]
+            print("!! starting from the selected heads; those were chosen from these same "
+                  "folds, so the result is not an independent reproduction")
+        else:
+            init_src = ck["property_regressors"]
+        init_sd = {k: v.to(device) for k, v in init_src[prop].items()}
         in_dim = 770 if PROP_USES_THK_FLUX[prop] else 768
         tcol = CV_TARGET[prop]
         out_root = os.path.join(args.out_dir, prop)
@@ -434,6 +441,11 @@ def main():
                     help="Override the per-property learning-rate grid, comma-separated.")
     cv.add_argument("--cv_epochs", type=int, default=None, help="Override the per-property epoch budget.")
     cv.add_argument("--cv_batch_size", type=int, default=None, help="Override the per-property batch size.")
+    cv.add_argument("--cv_init_heads", default="joint", choices=["joint", "selected"],
+                    help="Which head set in --checkpoint each fold starts from. The original "
+                         "protocol starts from the model's own heads, 'joint', which is the "
+                         "default. Starting from 'selected' is circular, because those heads "
+                         "were themselves chosen from these folds.")
     args = ap.parse_args()
 
     props = [p.strip() for p in args.properties.split(",") if p.strip()]

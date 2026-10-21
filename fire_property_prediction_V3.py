@@ -94,6 +94,24 @@ def build_regressor(input_dim, device):
     ).to(device)
 
 
+
+def resolve_heads(ck, which, label="heads"):
+    """Pick a head set from a checkpoint that may carry more than one.
+
+    'selected' prefers property_regressors_selected and falls back to property_regressors
+    for older checkpoints that only have the one set.
+    """
+    if which == "selected" and "property_regressors_selected" in ck:
+        print(f">> {label}: property_regressors_selected (cross-validation selected)")
+        return ck["property_regressors_selected"]
+    if which == "selected":
+        print(f">> {label}: property_regressors "
+              f"(this checkpoint carries no selected set)")
+    else:
+        print(f">> {label}: property_regressors (the model's own heads)")
+    return ck["property_regressors"]
+
+
 def canonical_psmiles(s):
     """RDKit-canonical pSMILES with bare '*'; None if the string does not parse."""
     m = Chem.MolFromSmiles(str(s).strip())
@@ -120,6 +138,8 @@ def get_parser():
 
     # weights
     p.add_argument("--checkpoint", default=os.path.join(SCRIPT_DIR, "checkpoint", "poly4mer_v3.ckpt"))
+    p.add_argument("--heads", default="selected", choices=["selected", "joint"],
+                   help="Which head set in --checkpoint to use. 'selected' is the cross-validation-selected set and the default; 'joint' is the model's own set, produced with the rest of the model. Ignored when --heads_ckpt names an external file.")
     p.add_argument("--heads_ckpt", default=None,
                    help="Optional separate file holding property_regressors and "
                         "property_stats; by default the heads in --checkpoint are used.")
@@ -155,9 +175,11 @@ def main(config):
         print(f">> Property heads from {os.path.basename(config.heads_ckpt)}")
 
     print(">> Loading property predictors.")
+    src = (hk["property_regressors"] if config.heads_ckpt is not None
+           else resolve_heads(ck, config.heads))
     regressors = {}
     for n in NAMES:
-        sd = hk["property_regressors"][n]
+        sd = src[n]
         in_dim = sd[next(k for k in sd if k.endswith("weight"))].shape[1]
         expected = 770 if USES_THK_FLUX[n] else 768
         if in_dim != expected:
