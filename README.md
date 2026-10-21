@@ -2,37 +2,37 @@
 
 A multi-physics synthesis based chemical language model for polymer fire property prediction and inverse design, with conditioning on environmental parameters (heat flux and sample thickness).
 
-<!-- Architecture figure to be added. -->
+
 
 This repository houses the code for our work in forward prediction and inverse polymer design using chemical language models. The released `v1.0.0` and `v2.0.0` code stays available under the tags of the same names.
 
 **Highlights**:
 
 1. The model is developed based on [SMI-TED](https://github.com/IBM/materials/tree/main), and trained to predict 4 flammability metrics: time to ignition (Tig), peak heat release rate (pHRR), smoke extinction area (SEA), and carbon monoxide yield (CO) from polymer SMILES.
-
 2. We introduce a principled multi-physics synthesis framework to data-scarce learning by embedding domain knowledge directly into language model training, enabling robust generalization beyond pure data-driven chemical language models.
-
 3. We design a new strategy for introducing new tokens into pretrained language models via encoder-decoder architecture expansion, leveraging monomer representations to capture complex polymer semantics.
-
 4. We architect an autoencoding system coupling predictive modeling with generative design, enabling inverse polymer design via latent-space exploration and structure reconstruction for targeted applications.
-
 5. Predictions and inverse design are conditioned on the heat flux and sample thickness of the test setup, so the same polymer can be evaluated under multiple fire-test scenarios.
-
 6. The encoder, decoder and the four property predictors now ship as a **single checkpoint**, and the property predictors read the latent directly, so no separate normalization file is needed at inference.
-
-7. Optional **hard-monotone** property heads for Tig and pHRR enforce the physical dependence on heat flux by construction; see [`poly4mer_monotone/`](poly4mer_monotone/README.md).
+7. Optional **hard-monotone** property heads for Tig and pHRR enforce the physical dependence on heat flux by construction; see `[poly4mer_monotone/](poly4mer_monotone/README.md)`.
 
 > **Two kinds of "predictor".** In the checkpoint, the key `predictor` is the **token predictor**, the last part of the decoder module. The **property predictors** are stored under `property_regressors`.
 
+
+
 ## What changed since `v2.0.0`
 
-| | `v2.0.0` | `v3.0.0` |
-|---|---|---|
-| Weight files | 6 (4 property heads, 1 decoder bundle, 1 scaler) | 1, `poly4mer_v3.ckpt` |
-| Property predictor input | whitened latent, needs `scalers.pt` | raw latent, statistics travel inside the checkpoint |
-| SEA predictor | 770 inputs (latent + thickness + flux) | 768 inputs (latent only) |
-| Input pSMILES | as written | must be RDKit-canonical with bare `*` |
-| Scripts | `fire_property_predict_v2.py`, `fire_optimize_smiles_v2.py` | `fire_property_prediction_V3.py`, `fire_inverse_design_v3.py` |
+
+|                          | `v2.0.0`                                                    | `v3.0.0`                                                      |
+| ------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------- |
+| Weight files             | 6 (4 property heads, 1 decoder bundle, 1 scaler)            | 1, `poly4mer_v3.ckpt`                                         |
+| Property predictor input | whitened latent, needs `scalers.pt`                         | raw latent, statistics travel inside the checkpoint           |
+| SEA predictor            | 770 inputs (latent + thickness + flux)                      | 768 inputs (latent only)                                      |
+| Input pSMILES            | as written                                                  | must be RDKit-canonical with bare `*`                         |
+| Scripts                  | `fire_property_predict_v2.py`, `fire_optimize_smiles_v2.py` | `fire_property_prediction_V3.py`, `fire_inverse_design_v3.py` |
+
+
+
 
 ## Requirements
 
@@ -43,6 +43,7 @@ pip install -r requirements.txt
 ```
 
 Key dependencies:
+
 - Python 3.10.18
 - torch==2.8.0+cu128, from the PyTorch wheel index named at the top of `requirements.txt`
 - numpy==2.2.6
@@ -53,7 +54,9 @@ Key dependencies:
 
 A CUDA GPU is recommended: about 4 GB of memory for inference, about 16 GB for training.
 
-> **Reconstruction accuracy depends on the exact `transformers` version**, because the SMILES tokenizer subclasses `BertTokenizer`. If reconstruction comes out near 0% in an environment of your own, re-create the environment from `requirements.txt` before investigating anything else.
+> **Reconstruction accuracy depends on the exact** `transformers` **version**, because the SMILES tokenizer subclasses `BertTokenizer`. If reconstruction comes out near 0% in an environment of your own, re-create the environment from `requirements.txt` before investigating anything else.
+
+
 
 ## Pretrained models
 
@@ -61,18 +64,18 @@ The SMI-TED Python package is bundled with this repository under `smi_ted_light/
 
 Download the following from our [HuggingFace mirror](https://huggingface.co/fishmoon1234/poly4mer) and place them at the paths shown:
 
-- **`poly4mer_v3.ckpt`** (3.7 GB) → `checkpoint/`
+- `poly4mer_v3.ckpt` (3.7 GB) → `checkpoint/`
   - This is the only v3 checkpoint you need. It carries the encoder, the decoder and
-    **both** property head sets, so the same file serves property prediction, inverse
-    design and the cross-validation reproduction. Every script loads it by default and
-    picks the right head set for the task; see *Two head sets* below.
+  **both** property head sets, so the same file serves property prediction, inverse
+  design and the cross-validation reproduction. Every script loads it by default and
+  picks the right head set for the task; see *Two head sets* below.
 - Pretrained SMI-TED encoder (1.1 GB) → `smi_ted_light/`
   - `smi-ted-Light_40.pt`
 - *Optional*, monotone Tig and pHRR heads (20 files, 63 MB) → `poly4mer_monotone/checkpoint/`
-  - see [`poly4mer_monotone/README.md`](poly4mer_monotone/README.md) for the sub-folder layout
+  - see `[poly4mer_monotone/README.md](poly4mer_monotone/README.md)` for the sub-folder layout
 - *Optional*, the 40 per-fold property heads (126 MB) → `checkpoint/fire_property_heads/<property>/`
   - `fold_0.ckpt` .. `fold_9.ckpt` for each of `tig`, `pkhrr`, `sea`, `co`; needed only to
-    reproduce the cross-validation tables, not for prediction or design
+  reproduce the cross-validation tables, not for prediction or design
 
 All weights are ignored by git. After downloading, the layout should look like:
 
@@ -88,8 +91,8 @@ poly4mer/
     ...
 |-- poly4mer_monotone/
     |-- checkpoint/
-        |-- tig/{full_head,last_two_linear}/
-        |-- phrr/{full_head,last_two_linear}/
+        |-- tig/last_two_linear/
+        |-- phrr/last_two_linear/
     |-- fire_property_prediction_monotone.py
     |-- run_property_prediction_monotone.sh
     |-- README.md
@@ -113,23 +116,31 @@ poly4mer/
 |-- requirements.txt
 ```
 
+
+
 ## Model components
 
-| Module | Parts, in order | Where the weights are |
-|---|---|---|
-| **Encoder module** | SMI-TED token embedder, then `star_encoder`, then the autoencoder encoder | SMI-TED: `smi_ted_light/smi-ted-Light_40.pt`, frozen. The rest: `star_encoder` and `autoencoder_encoder` in `poly4mer_v3.ckpt` |
-| **Decoder module** | autoencoder decoder, then the token predictor | `decoder` and `predictor` in `poly4mer_v3.ckpt` |
-| **Property predictors** | four MLP heads on the latent `z`, for Tig, pHRR, SEA, CO | `property_regressors` and `property_regressors_selected`, with shared `property_stats`, in `poly4mer_v3.ckpt` |
+
+| Module                  | Parts, in order                                                           | Where the weights are                                                                                                          |
+| ----------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Encoder module**      | SMI-TED token embedder, then `star_encoder`, then the autoencoder encoder | SMI-TED: `smi_ted_light/smi-ted-Light_40.pt`, frozen. The rest: `star_encoder` and `autoencoder_encoder` in `poly4mer_v3.ckpt` |
+| **Decoder module**      | autoencoder decoder, then the token predictor                             | `decoder` and `predictor` in `poly4mer_v3.ckpt`                                                                                |
+| **Property predictors** | four MLP heads on the latent `z`, for Tig, pHRR, SEA, CO                  | `property_regressors` and `property_regressors_selected`, with shared `property_stats`, in `poly4mer_v3.ckpt`                  |
+
+
+
 
 ### Two head sets
 
 The checkpoint carries two sets of property heads. They share the same architecture and the
 same standardization statistics, and differ only in weights.
 
-| Key | What it is | Used by |
-|---|---|---|
-| `property_regressors` | the model's own heads, produced with the rest of the model | the cross-validation reproduction, as its starting point |
-| `property_regressors_selected` | per-property heads chosen by 10-fold cross-validation on the experimental data, one fold per property | property prediction and inverse design, by default |
+
+| Key                            | What it is                                                                                            | Used by                                                  |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `property_regressors`          | the model's own heads, produced with the rest of the model                                            | the cross-validation reproduction, as its starting point |
+| `property_regressors_selected` | per-property heads chosen by 10-fold cross-validation on the experimental data, one fold per property | property prediction and inverse design, by default       |
+
 
 `--heads selected` (the default) and `--heads joint` switch between them in
 `fire_property_prediction_V3.py` and `fire_inverse_design_v3.py`. Each run prints which set
@@ -145,18 +156,20 @@ held-out estimates; see the caveat under the cross-validation section below.
 
 The property predictors consume the **raw** latent `z`. Only thickness and flux are standardized, using the statistics stored alongside the heads:
 
-| Head | Input | Dimension |
-|---|---|---:|
-| Tig | `[z, thickness_norm, flux_norm]` | 770 |
-| pHRR | `[z, thickness_norm, flux_norm]` | 770 |
-| SEA | `z` | 768 |
-| CO | `z` | 768 |
+
+| Head | Input                            | Dimension |
+| ---- | -------------------------------- | --------- |
+| Tig  | `[z, thickness_norm, flux_norm]` | 770       |
+| pHRR | `[z, thickness_norm, flux_norm]` | 770       |
+| SEA  | `z`                              | 768       |
+| CO   | `z`                              | 768       |
+
 
 Each head returns a standardized value; the real value is `output * y_std[k] + y_mean[k]`.
 
 ## Input pSMILES format
 
-Inputs must be **RDKit-canonical pSMILES with bare `*` attachment points**, for example `*CC(*)c1ccccc1`. Bracketed stars such as `[*]` and non-canonical orderings of the same molecule do not encode faithfully and will not reconstruct.
+Inputs must be **RDKit-canonical pSMILES with bare** `*` **attachment points**, for example `*CC(*)c1ccccc1`. Bracketed stars such as `[*]` and non-canonical orderings of the same molecule do not encode faithfully and will not reconstruct.
 
 `fire_property_prediction_V3.py` takes `--canonicalize` to rewrite inputs first, and `evaluate_reconstruction_v3.py` exports `canonical_psmiles()` for use in your own code.
 
@@ -167,25 +180,31 @@ A design is accepted when the decoded unit has **two or more attachment points**
 **Property predictor**:
 
 1. Add the pSMILES of polymers to be predicted in
+
 ```
 example_pSMILES_homo.txt
 ```
+
 The file is a CSV with columns `mol_id, mol_name, smiles`.
 
-2. Edit the polymer list and the test conditions in
+1. Edit the polymer list and the test conditions in
+
 ```
 run_property_prediction.sh
 ```
+
 The test conditions are the heat flux (`FLUX`) and the sample thickness (`THICKNESS`); both are passed to the model so the same polymer can be queried under different fire-test scenarios. Set `POLYMERS="ALL"` to predict for every row of the file.
 
-3. Run the predictor with the shell script
+1. Run the predictor with the shell script
+
 ```
 ./run_property_prediction.sh
 ```
 
-4. Predictions are printed and written to `predictions.csv`.
+1. Predictions are printed and written to `predictions.csv`.
 
 A single pSMILES can also be queried directly:
+
 ```bash
 python fire_property_prediction_V3.py --smiles '*CC(*)C' --thickness 3 --flux 50
 ```
@@ -193,47 +212,59 @@ python fire_property_prediction_V3.py --smiles '*CC(*)C' --thickness 3 --flux 50
 **Polymer design**:
 
 1. Add the pSMILES of candidate initialization polymers in
+
 ```
 example_pSMILES_homo.txt
 ```
 
-2. Edit the polymer list in
+1. Edit the polymer list in
+
 ```
 run_design.sh
 ```
+
 together with the penalty parameters, the test conditions, and the optimization hyperparameters.
 
 The test conditions are the heat flux and the sample thickness:
+
 ```
 FLUX=50.0
 THICKNESS=3.0
 ```
 
 For the penalty parameters, one can tune
+
 ```
 C_TIG=0.2
 C_QPUA=0.6
 C_SEA=0.1
 C_CO=0.1
 ```
+
 to change weights between different fire properties. Weight by how far each property sits from its bound rather than by importance: a property already near its optimum contributes little gradient, and weighting it heavily starves the search.
 
 For the optimization hyperparameters, one can change the maximum optimization steps (`MAX_EPOCHS`) and the step size, which is set per polymer in the `RUNS` list.
 
-3. Run inverse design with the shell script
+1. Run inverse design with the shell script
+
 ```
 ./run_design.sh
 ```
 
-4. Candidate polymers are stored in
+1. Candidate polymers are stored in
+
 ```
 results/optimized_smiles_canonicalized/tig${C_TIG}_phrr${C_QPUA}_sea${C_SEA}_co${C_CO}_flux${FLUX}_thickness${THICKNESS}/optimized_smiles_canonicalized_${name}_${idx}_lr_${lr}.txt
 ```
+
 The optimization path and estimated fire property values can be found in
+
 ```
 results/log_optimized_prop/.../log_optimized_props_${name}_${idx}_lr_${lr}.txt
 ```
+
 and the accepted designs, with their discovery step, attachment-point count and predicted properties, in
+
 ```
 results/designs/.../designs_${name}_${idx}_lr_${lr}.json
 ```
@@ -243,9 +274,11 @@ results/designs/.../designs_${name}_${idx}_lr_${lr}.json
 **Reconstruction check**:
 
 To verify an installation, or to measure reconstruction on your own list of pSMILES:
+
 ```bash
 python evaluate_reconstruction_v3.py --files homo=example_pSMILES_homo.txt
 ```
+
 This reports exact match, token accuracy, validity, same-molecule rate, and how many inputs were already in canonical bare-star form.
 
 **Training**:
@@ -264,6 +297,7 @@ and carry no test conditions because those heads take the latent alone.
 
 Run the whole thing as a demo, which scores the bundled heads, re-trains one property's
 10 folds with the same recipe, and prints the two side by side:
+
 ```bash
 ./run_demo_property_heads.sh                       # ~15 min, re-trains CO
 DEMO_FOLDS=0,1,2 ./run_demo_property_heads.sh      # ~5 min
@@ -271,19 +305,23 @@ SKIP_TRAIN=1 ./run_demo_property_heads.sh          # scoring only, under a minut
 ```
 
 Score the shipped per-fold heads on their own:
+
 ```bash
 python evaluate_fire_prediction_heads.py --csv folds.csv
 ```
+
 This prints, per property, the full per-fold table of train and test relative error, the mean
 over the best 5 folds, the mean over all 10, and the best overall relative error with the fold
 that achieved it. Where a head ships with its recorded result the script prints both so the
 two can be compared.
 
 Re-run the training that produced them:
+
 ```bash
 python training/train_property_predictor_finetune.py --cv --out_dir runs/cv
 python training/train_property_predictor_finetune.py --cv --properties tig --cv_folds 8 --out_dir runs/tig8
 ```
+
 `--cv` sweeps the per-property learning-rate grid on each fold and keeps the epoch with the
 lowest error on that fold's test rows, starting every head from the one already in the
 checkpoint. The per-property grids, epoch budgets and batch sizes are in `CV_RECIPE` near the
@@ -296,9 +334,11 @@ top of that file.
 > because it is the criterion that picked the shipped heads, not as an estimate of
 > generalization. Prefer the all-10 mean when a single number is needed.
 
+
+
 ## Monotone property heads (optional)
 
-[`poly4mer_monotone/`](poly4mer_monotone/README.md) holds alternative Tig and pHRR heads that
+`[poly4mer_monotone/](poly4mer_monotone/README.md)` holds alternative Tig and pHRR heads that
 are hard-monotone in heat flux: Tig can only fall as flux rises, pHRR can only rise. The
 constraint is structural rather than a penalty, so it holds for every input. The encoder is
 the same file as the main model; only the heads differ, and SEA and CO are not covered.
@@ -308,32 +348,27 @@ cd poly4mer_monotone
 ./run_property_prediction_monotone.sh
 ```
 
+
+
 ## Inverse design examples
 
 `run_design.sh` runs five worked examples and prints every design it finds:
 
-| Seed | lr | Weights tig/pHRR/SEA/CO | Designs |
-|---|---:|---|---|
-| PMMA | 0.3 | 0.2/0.6/0.1/0.1 | 2 linear |
-| PP | 1.0 | 0.2/0.6/0.1/0.1 | 2 linear |
-| NYLON | 0.3 | 0.2/0.6/0.1/0.1 | 2 linear |
-| BPA-ether | 0.1 | 0.2/0.6/0.1/0.1 | 1 linear |
-| PEI-N | 0.01 | 1/1/1/1 | 1 linear, 1 branch point |
+
+| Seed      | lr   | Weights tig/pHRR/SEA/CO | Designs                  |
+| --------- | ---- | ----------------------- | ------------------------ |
+| PMMA      | 0.3  | 0.2/0.6/0.1/0.1         | 2 linear                 |
+| PP        | 1.0  | 0.2/0.6/0.1/0.1         | 2 linear                 |
+| NYLON     | 0.3  | 0.2/0.6/0.1/0.1         | 2 linear                 |
+| BPA-ether | 0.1  | 0.2/0.6/0.1/0.1         | 1 linear                 |
+| PEI-N     | 0.01 | 1/1/1/1                 | 1 linear, 1 branch point |
+
 
 ```bash
 ./run_design.sh
 ONLY="PMMA PP" ./run_design.sh        # a subset
-MAX_EPOCHS=500 ./run_design.sh        # quick smoke test, finds fewer designs
+MAX_EPOCHS=500 ./run_design.sh        # quick smoke test, finds fewer design
 ```
-
-PEI-N runs at equal weights deliberately. It already sits near the objective's optimum on
-pHRR and SEA, so those terms supply almost no gradient and weighting them heavily starves
-the search. Equal weights let the CO term, which has the most headroom, drive the path.
-
-Use them when a prediction feeds an optimizer or a screening loop and a non-physical flux
-trend would be costly. On held-out polymers they are **level with**, not better than, the
-plain heads under leakage-free selection; the case for them is the guarantee, not the
-accuracy. That folder's README gives both sets of numbers.
 
 ## Citation
 
@@ -356,3 +391,4 @@ If you find our models useful, please consider citing our papers:
   booktitle={NeurIPS 2025 Machine Learning and the Physical Sciences Workshop}
 }
 ```
+
