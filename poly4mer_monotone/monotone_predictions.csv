@@ -1,5 +1,0 @@
-mol_name,smiles,smiles_canonical,thickness,flux,variant,fold,tig,pkhrr
-,*CC(*)(C)C(=O)OC,*CC(*)(C)C(=O)OC,3.0,50.0,last_two_linear,ensemble,19.139551,1050.295776
-,*CC(*)C,*CC(*)C,3.0,50.0,last_two_linear,ensemble,30.913641,2069.396973
-,*CC(*)Cl,*CC(*)Cl,3.0,50.0,last_two_linear,ensemble,82.240562,201.265778
-,*OC(=O)Oc1ccc(C(C)(C)c2ccc(*)cc2)cc1,*OC(=O)Oc1ccc(C(C)(C)c2ccc(*)cc2)cc1,3.0,50.0,last_two_linear,ensemble,48.629864,502.388336

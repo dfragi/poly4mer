@@ -71,11 +71,12 @@ Download the following from our [HuggingFace mirror](https://huggingface.co/fish
   picks the right head set for the task; see *Two head sets* below.
 - Pretrained SMI-TED encoder (1.1 GB) → `smi_ted_light/`
   - `smi-ted-Light_40.pt`
-- *Optional*, monotone Tig and pHRR heads (20 files, 63 MB) → `poly4mer_monotone/checkpoint/`
-  - see `[poly4mer_monotone/README.md](poly4mer_monotone/README.md)` for the sub-folder layout
-- *Optional*, the 40 per-fold property heads (126 MB) → `checkpoint/fire_property_heads/<property>/`
-  - `fold_0.ckpt` .. `fold_9.ckpt` for each of `tig`, `pkhrr`, `sea`, `co`; needed only to
-  reproduce the cross-validation tables, not for prediction or design
+- *Optional*, the per-fold property heads, `property_heads_10folds/<p>/` on the hub
+  (40 files, 126 MB) → `checkpoint/fire_property_heads/<p>/`, for `tig`, `pkhrr`, `sea`, `co`
+  - needed only to compare your own re-training against ours; prediction and design do not use them
+- *Optional*, the monotone heads, `monotone_heads_10folds/<p>/` on the hub
+  (20 files, 63 MB) → `poly4mer_monotone/checkpoint/<p>/last_two_linear/`, for `tig` and `phrr`
+  - see [poly4mer_monotone/README.md](poly4mer_monotone/README.md)
 
 All weights are ignored by git. After downloading, the layout should look like:
 

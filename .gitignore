@@ -24,3 +24,4 @@ predictions.csv
 # HuggingFace release helpers, kept local
 HUGGINGFACE_MODEL_CARD.md
 upload_to_huggingface.sh
+poly4mer_monotone/monotone_predictions.csv
