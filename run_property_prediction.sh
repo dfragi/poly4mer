@@ -24,6 +24,7 @@ FLUX=50.0          # kW/m^2
 # polymers to predict, by name as it appears in INIT_FILE.
 # Set to "ALL" to predict for every row of the file instead.
 POLYMERS="PMMA PP PVC PC"
+#POLYMERS="ALL"
 
 HEADS_ARG=()
 if [ -n "${HEADS_CKPT:-}" ]; then HEADS_ARG=(--heads_ckpt "$HEADS_CKPT"); fi
