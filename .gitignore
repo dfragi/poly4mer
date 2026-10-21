@@ -20,3 +20,7 @@ results/
 
 # property-prediction output
 predictions.csv
+
+# HuggingFace release helpers, kept local
+HUGGINGFACE_MODEL_CARD.md
+upload_to_huggingface.sh
