@@ -4,43 +4,6 @@ This directory contains the workflow for studying chemical structure and fire-pr
 
 The workflow learns sparse features, identifies features associated with molar groups, tests their effects through zero-ablation, and trains fire-property predictors on the sparse representations.
 
-## 1. Workflow overview
-
-```text
-Polymer pSMILES
-      |
-      v
-Frozen Poly4mer encoder
-      |
-      v
-Dense embedding z, dimension 768
-      |
-      v
-Top-K sparse autoencoder
-      |
-      v
-Sparse code c, dimension D = alpha × 768
-      |
-      +--> Evaluate embedding and pSMILES reconstruction
-      |
-      +--> Train molar-group binary classifiers
-      |          |
-      |          v
-      |    Rank and select essential features
-      |          |
-      |          v
-      |    Zero selected features and decode pSMILES
-      |
-      +--> Train linear fire-property prediction heads
-```
-
-The pretrained Poly4mer encoder stays frozen. SAE training learns a sparse representation of its embeddings. Subsequent classifier and property-head training keep the SAE frozen.
-
-The reconstruction path is:
-
-```text
-Sparse code c → SAE decoder → reconstructed z → Poly4mer decoder → pSMILES
-```
 
 ## 2. Files in this directory
 
@@ -77,23 +40,6 @@ cd poly4mer_MI
 The current scripts import parent-level modules such as `models.py`, `utils1.py`, and `train_group_classifier.py`. Several also resolve data and model paths relative to their own location.
 
 
-Run all examples below from the repository root.
-
-## 4. Required inputs
-
-| Input | Role |
-|---|---|
-| `checkpoint/poly4mer_v3.0.0.ckpt` | Pretrained Poly4mer encoder/decoder checkpoint. | 
-| `smi_ted_light/` | Frozen smi-ted weights, vocabulary, and implementation. |
-| `data/PSMILES.smi` | Polymer corpus used for SAE training. |
-| `data/v1_fragment_ids_correct.smi` | Fragment-labelled polymer source used by the group-analysis workflow. |
-| `data/v1_fragments_ids_correct_binary.smi` | pSMILES followed by 196 group-presence columns. |
-| `data/fragments_reference.csv` | Fragment/group ID reference. |
-| `data/experimental_flux_thickness.smi` | Ignition and peak heat-release targets with thickness and flux. |
-| `data/experimental_sea_avg.smi` | SEA targets. |
-| `data/experimental_co_avg.smi` | CO targets. |
-| `data/10folds/` | Existing train/test splits for property evaluation. |
-
 ### Included pretrained checkpoints
 
 
@@ -102,56 +48,15 @@ The following checkpoints and files can be downloaded from our huggingface  - (h
 - [Pretrained SMI-TED encoder](https://huggingface.co/fishmoon1234/poly4mer) → `smi_ted_light/`
   - `smi-ted-Light_40.pt`
 
-- poly4mer_v3.0.0.ckpt -> (https://huggingface.co/fishmoon1234/poly4mer)
+- poly4mer_v3.0.0.ckpt -> ([https://huggingface.co/fishmoon1234/poly4mer](https://huggingface.co/fishmoon1234/poly4mer/tree/main/poly4mer_pretrained_v3))
 - topk_sae_alpha4_k1000.pt -> (https://huggingface.co/fishmoon1234/poly4mer) 
-After downloading the structure should look like this: 
 
-```text
-poly4mer_MI/
-└── checkpoint/
-    ├── poly4mer_v3.0.0.ckpt 
-    └── top_k_sae/
-        └── topk_sae_alpha4_k1000.pt
-```
 
 | Checkpoint | Purpose |
 |---|---|
-| `checkpoint/poly4mer_v3.0.0.ckpt` | Pretrained Poly4mer model used to encode pSMILES and decode reconstructed embeddings. |
-| `checkpoint/top_k_sae/topk_sae_alpha4_k1000.pt` | Pretrained Top-K SAE with expansion factor 4 and K = 1000 |
-## Directory structure
+| `checkpoint/poly4mer_v3.ckpt` | Pretrained Poly4mer model used to encode pSMILES and decode reconstructed embeddings. |
+| `checkpoint/top_k_sae/topk_sae_alpha{alpha}_k{k}.pt` | Pretrained Top-K SAE with expansion factor alpha and K |
 
-```text
-
-poly4mer_MI/
-    ├── README.md                       
-    ├── FIRE_PREDICTION.md               # Detailed fire-prediction documentation
-    │
-    ├── train_topk_sae.py                
-    ├── eval_sae_psmiles.py              
-    ├── eval_sae_dce_loss_recovery.py     
-    ├── train_group_binary_classifier.py 
-    ├── select_features_binary_pipeline.py
-    ├── sweep_topk_sae.sh 
-    ├── zero_ablate_sweep_pipeline.py    
-    ├── predict_fire_properties.py       
-    ├── predict_fire_properties_10folds.py
-    │                                   
-    ├── analyze_fire_properties.py       
-    │
-    ├── checkpoint/
-    │   ├── poly4mer_v3.0.0.ckpt         # Included Poly4mer checkpoint
-    │   ├── topk_sae/
-    │   │   └── topk_sae_alpha4_k1000.pt # Included pretrained SAE
-    │   ├── sae_cache/                  # Generated embedding/token caches
-    │   ├── group_binary_classifier/    # Generated classifiers and feature sets
-    │   ├── fire_heads/                 # Generated full-data property heads
-    │   └── fire_heads_10folds/          # Default output for fold-specific heads
-    │
-    ├── data/           -> ../data/
-    ├── smi_ted_light/  -> ../smi_ted_light/
-    ├── results/        -> ../results/
-    └── logs/           -> ../logs/
-```
 
 ## 5. Hyperparameters explored
 
@@ -281,12 +186,6 @@ python poly4mer_MI/zero_ablate_sweep_pipeline.py \
 
 ### Stage 6: Fit fire-property heads
 
-| Property | Meaning | Inputs |
-|---|---|---|
-| `tig` | Time to ignition | SAE code + thickness + flux |
-| `pkhrr` | Peak heat release rate | SAE code + thickness + flux |
-| `sea` | Specific extinction area | SAE code |
-| `co` | CO yield | SAE code |
 
 #### Full-data ridge fit
 
@@ -330,34 +229,6 @@ python poly4mer_MI/predict_fire_properties_10folds.py \
     --top 5 \
     --save_dir checkpoint/fire_heads_10folds_final/lr1e-3_wd1e-2_ep10000/alpha8_k160 \
     --out results/10folds_final/lr1e-3_wd1e-2_ep10000/a8_k160.csv
-```
-
-
-
-### Stage 7: Generate top-20 ridge tables
-
-After producing the full-data ridge CSVs, logs, and saved heads:
-
-```bash
-python poly4mer_MI/analyze_fire_properties.py \
-    'results/ridge_final/a*_k*_lam0.001.csv'
-```
-
-The current analyzer requires:
-
-- Input CSVs inside a directory named `ridge_final`.
-- Matching logs under `logs/ridge_final/`.
-- Logs that identify completed full-data ridge runs.
-- Existing SAE checkpoints and saved property heads.
-
-
-Outputs are written to the current working directory:
-
-```text
-table_a2_top20_ridge_tig.csv
-table_a2_top20_ridge_pkhrr.csv
-table_a2_top20_ridge_sea.csv
-table_a2_top20_ridge_co.csv
 ```
 
 
