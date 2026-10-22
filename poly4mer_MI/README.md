@@ -83,7 +83,7 @@ Run all examples below from the repository root.
 
 | Input | Role |
 |---|---|
-| `checkpoint/poly4mer_v3.0.0.ckpt` | Pretrained Poly4mer encoder/decoder checkpoint. |
+| `checkpoint/poly4mer_v3.0.0.ckpt` | Pretrained Poly4mer encoder/decoder checkpoint. | 
 | `smi_ted_light/` | Frozen smi-ted weights, vocabulary, and implementation. |
 | `data/PSMILES.smi` | Polymer corpus used for SAE training. |
 | `data/v1_fragment_ids_correct.smi` | Fragment-labelled polymer source used by the group-analysis workflow. |
@@ -96,12 +96,20 @@ Run all examples below from the repository root.
 
 ### Included pretrained checkpoints
 
-The following checkpoints are included inside `poly4mer_MI/`:
+
+The following checkpoints and files can be downloaded from our huggingface  - (https://huggingface.co/fishmoon1234/poly4mer)
+
+- [Pretrained SMI-TED encoder](https://huggingface.co/fishmoon1234/poly4mer) → `smi_ted_light/`
+  - `smi-ted-Light_40.pt`
+
+- poly4mer_v3.0.0.ckpt -> (https://huggingface.co/fishmoon1234/poly4mer)
+- topk_sae_alpha4_k1000.pt -> (https://huggingface.co/fishmoon1234/poly4mer) 
+After downloading the structure should look like this: 
 
 ```text
 poly4mer_MI/
 └── checkpoint/
-    ├── poly4mer_v3.0.0.ckpt
+    ├── poly4mer_v3.0.0.ckpt 
     └── top_k_sae/
         └── topk_sae_alpha4_k1000.pt
 ```
@@ -110,9 +118,6 @@ poly4mer_MI/
 |---|---|
 | `checkpoint/poly4mer_v3.0.0.ckpt` | Pretrained Poly4mer model used to encode pSMILES and decode reconstructed embeddings. |
 | `checkpoint/top_k_sae/topk_sae_alpha4_k1000.pt` | Pretrained Top-K SAE with expansion factor 4 and K = 1000 |
-
-These checkpoints allow the workflow to begin with SAE evaluation or downstream analysis without retraining the SAE. Data files, smi-ted resources, and parent-level helper modules are still required. Group classifiers and fire-property heads are trained separately.
-
 ## Directory structure
 
 ```text
