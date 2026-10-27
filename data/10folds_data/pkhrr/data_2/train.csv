@@ -1,0 +1,206 @@
+smiles_names,smiles_canonicalized,thickness,flux,pkhrr
+PE,*CC*,6.0,40,1408
+PE,*CC*,6.0,70,2735
+pe,*CC*,3.2,25,1384
+pe,*CC*,3.2,50,2272
+pe,*CC*,3.2,75,2748
+pe,*CC*,21.0,35,1374
+pe,*CC*,3.0,30,869
+pe,*CC*,3.0,40,1162
+pe,*CC*,3.0,50,1532
+pe,*CC*,6.0,35,1744
+pom,*CO*,6.0,50,429
+pom,*CO*,6.0,40,360
+pom,*CO*,6.0,70,566
+PP,*CC(*)C,6.0,40,1509
+PP,*CC(*)C,6.0,70,2421
+pp,*CC(*)C,3.3,25,1373
+pp,*CC(*)C,3.3,50,2141
+pp,*CC(*)C,3.3,75,2630
+pp,*CC(*)C,6.0,40,2540
+pp,*CC(*)C,6.0,35,1642
+pvc,*CC(*)Cl,6.0,40,183
+pvc,*CC(*)Cl,6.0,70,190
+pvc,*CC(*)Cl,3.3,25,99
+pvc,*CC(*)Cl,3.3,75,305
+pvc,*CC(*)Cl,3.0,30,90
+pvc,*CC(*)Cl,3.0,40,107
+pvc,*CC(*)Cl,3.0,50,155
+pvc,*CC(*)Cl,6.0,40,137
+pvc,*CC(*)Cl,6.0,50,157
+pvc,*CC(*)Cl,3.2,20,142
+pvc,*CC(*)Cl,3.2,30,172
+pvc,*CC(*)Cl,3.2,40,347
+pvc,*CC(*)Cl,3.2,50,497
+PTFE,*C(F)(F)C(*)(F)F,6.0,70,161
+PTFE,*C(F)(F)C(*)(F)F,3.0,40,64
+PMMA,*CC(*)(C)C(=O)OC,25.0,40,665
+PMMA,*CC(*)(C)C(=O)OC,25.0,70,988
+pmma,*CC(*)(C)C(=O)OC,4.8,25,728
+pmma,*CC(*)(C)C(=O)OC,4.8,50,1115
+pmma,*CC(*)(C)C(=O)OC,4.8,75,1632
+pmma,*CC(*)(C)C(=O)OC,10.0,50,765
+pmma,*CC(*)(C)C(=O)OC,10.0,50,826
+pmma,*CC(*)(C)C(=O)OC,10.0,50,824
+pmma,*CC(*)(C)C(=O)OC,10.0,50,816
+pmma,*CC(*)(C)C(=O)OC,10.0,50,855
+pmma,*CC(*)(C)C(=O)OC,10.0,50,801
+pmma,*CC(*)(C)C(=O)OC,18.0,20,498
+pmma,*CC(*)(C)C(=O)OC,18.0,35,626
+pmma,*CC(*)(C)C(=O)OC,18.0,50,814
+pmma,*CC(*)(C)C(=O)OC,18.0,70,1067
+PS,*CC(*)c1ccccc1,6.0,40,1101
+PS,*CC(*)c1ccccc1,4.0,50,1225
+PS,*CC(*)c1ccccc1,6.0,35,813
+PS,*CC(*)c1ccccc1,6.0,50,1294
+ps,*CC(*)c1ccccc1,6.0,35,813
+ps,*CC(*)c1ccccc1,6.0,50,1294
+pps,*Sc1ccc(*)cc1,12.5,50,118
+pps,*Sc1ccc(*)cc1,12.5,75,271
+pps,*Sc1ccc(*)cc1,12.5,100,332
+ppo,*Oc1c(C)cc(*)cc1C,3.2,20,312
+ppo,*Oc1c(C)cc(*)cc1C,3.2,30,571
+ppo,*Oc1c(C)cc(*)cc1C,3.2,40,541
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.9,25,613
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.9,50,863
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.9,75,755
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.0,35,523
+pek ,*C(=O)c1cccc(Oc2cccc(*)c2)c1,6.0,50,67
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,6.0,70,1984
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,3.2,20,320
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,3.2,30,401
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,3.2,50,509
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,40,1313
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,70,2019
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,3.5,25,704
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,3.5,50,1226
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,3.5,75,1713
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,30,802
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,40,863
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,50,1272
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,3.2,50,214
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,3.2,75,250
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,1.6,50,381
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,1.6,75,379
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,1.6,100,561
+pen,*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1,3.0,50,393
+pen,*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1,3.0,75,391
+pen,*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1,3.0,100,441
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,35,244
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,50,304
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,75,378
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,100,415
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,35,322
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,390
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,75,442
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,100,437
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,40,425
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,70,439
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,5.6,50,501
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,5.6,75,533
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,30,350
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,40,399
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,50,477
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,50,357
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,50,885
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,35,96
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,50,149
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,100,204
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,35,166
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,50,195
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,100,272
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,1.6,50,543
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,50,46
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,75,133
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,100,191
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,3.2,50,256
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,3.2,75,353
+pekk,*C(=O)c1cccc(C(=O)c2cccc(Oc3cccc(*)c3)c2)c1,3.0,35,101
+pekk,*C(=O)c1cccc(C(=O)c2cccc(Oc3cccc(*)c3)c2)c1,3.0,50,171
+pekk,*C(=O)c1cccc(C(=O)c2cccc(Oc3cccc(*)c3)c2)c1,3.0,75,270
+pekk,*C(=O)c1cccc(C(=O)c2cccc(Oc3cccc(*)c3)c2)c1,3.0,100,333
+m10,*N=C(*)Oc1c(C)ccc(Cc2ccc(C)c(OC(*)=N*)c2C)c1C,6.4,35,305
+m10,*N=C(*)Oc1c(C)ccc(Cc2ccc(C)c(OC(*)=N*)c2C)c1C,6.4,50,251
+m10,*N=C(*)Oc1c(C)ccc(Cc2ccc(C)c(OC(*)=N*)c2C)c1C,6.4,75,280
+m10,*N=C(*)Oc1c(C)ccc(Cc2ccc(C)c(OC(*)=N*)c2C)c1C,6.4,100,338
+bpc-pc,*Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=O)cc2)cc1,6.0,50,73
+bpc-pc,*Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=O)cc2)cc1,6.0,100,161
+pbi,*c1ccc(-c2nc3ccc(-c4ccc5[nH]c(*)nc5c4)cc3[nH]2)cc1,12.5,75,45
+pbi,*c1ccc(-c2nc3ccc(-c4ccc5[nH]c(*)nc5c4)cc3[nH]2)cc1,12.5,100,55
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,35,57
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,50,124
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,75,177
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,100,186
+pai,*NC(=O)c1ccc2c(c1)C(=O)N(c1ccc(Cc3cccc(*)c3)cc1)C2=O,12.5,50,28
+pai,*NC(=O)c1ccc2c(c1)C(=O)N(c1ccc(Cc3cccc(*)c3)cc1)C2=O,12.5,75,49
+pt30,*N=C(*)Oc1ccccc1Cc1cccc(Cc2ccccc2OC(*)=N*)c1OC(*)=N*,6.4,35,179
+pt30,*N=C(*)Oc1ccccc1Cc1cccc(Cc2ccccc2OC(*)=N*)c1OC(*)=N*,6.4,50,166
+pt30,*N=C(*)Oc1ccccc1Cc1cccc(Cc2ccccc2OC(*)=N*)c1OC(*)=N*,6.4,100,138
+pi,*c1cccc(Oc2ccc(-n3c(=O)c4cc5c(=O)n(*)c(=O)c5cc4c3=O)cc2)c1,12.5,75,30
+pi,*c1cccc(Oc2ccc(-n3c(=O)c4cc5c(=O)n(*)c(=O)c5cc4c3=O)cc2)c1,12.5,100,107
+f10,*N=C(*)Oc1cccc(C(c2cccc(OC(*)=N*)c2)(C(F)(F)F)C(F)(F)F)c1,6.4,75,53
+f10,*N=C(*)Oc1cccc(C(c2cccc(OC(*)=N*)c2)(C(F)(F)F)C(F)(F)F)c1,6.4,100,78
+bpa ep,*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,1.6,50,155
+bpc ep,*OCC(*)COc1ccc(C(=C(Cl)Cl)c2ccc(OCC(*)CO*)cc2)cc1,1.6,50,77
+xu366,*N=C(*)Oc1cccc(C(C)(C)c2cccc(C(C)(C)c3cccc(OC(*)=N*)c3)c2)c1,6.4,50,202
+xu366,*N=C(*)Oc1cccc(C(C)(C)c2cccc(C(C)(C)c3cccc(OC(*)=N*)c3)c2)c1,6.4,75,279
+pphs,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,1.6,50,267
+pphs,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,1.6,75,284
+ppsu,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,12.5,50,86
+ppsu,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,12.5,100,261
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,1.6,50,598
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,1.6,75,671
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,1.6,100,738
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,35,188
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,50,304
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,75,349
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,100,325
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,6.0,50,431
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,12.5,50,36
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,12.5,75,131
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,12.5,100,191
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,6.0,50,74
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,6.0,50,128
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,3.2,50,179
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,3.2,75,120
+pa6,*NCCCCCC(*)=O,6.0,30,550
+pa6,*NCCCCCC(*)=O,6.0,50,800
+pa6,*NCCCCCC(*)=O,6.0,50,1000
+pa6,*NCCCCCC(*)=O,6.0,70,1050
+pa6,*NCCCCCC(*)=O,6.0,50,1272
+pa11,*NCCCCCCCCCCC(*)=O,6.0,50,1620
+pa12,*NCCCCCCCCCCCC(*)=O,6.0,50,1730
+pla,*OC(=O)C(*)C,3.0,50,459
+CPVC,*CC(Cl)C(Cl)C(*)Cl,6.0,40,84
+CPVC,*CC(Cl)C(Cl)C(*)Cl,6.0,70,93
+cpvc,*CC(Cl)C(Cl)C(*)Cl,6.0,50,87
+xu371,*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,6.4,35,204
+xu371,*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,6.4,50,210
+xu371,*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,6.4,75,231
+xu371,*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,6.4,100,248
+F PEK,*Oc1ccc(C(c2ccc(Oc3ccc(C(=O)c4ccc(C(c5ccc(C(=O)c6ccc(*)cc6)cc5)(C(F)(F)F)C(F)(F)F)cc4)cc3)cc2)(C(F)(F)F)C(F)(F)F)cc1,6.0,50,87
+F&P polyether,*Oc1ccc(C(c2ccc(Oc3ccc(P(=O)(c4ccccc4)c4ccc(*)cc4)cc3)cc2)(C(F)(F)F)C(F)(F)F)cc1,6.0,50,120
+F polyester,*Oc1ccc(C(c2ccc(OC(=O)c3ccc(OC(=O)c4ccc(C(=O)Oc5ccc(C(*)=O)cc5)cc4)cc3)cc2)(C(F)(F)F)C(F)(F)F)cc1,6.0,50,131
+pvf,*CC(*)F,6.0,50,33
+polyvinyl ester,*CC(*)OC,10.0,20,341
+polyvinyl ester,*CC(*)OC,10.0,30,471
+polyvinyl ester,*CC(*)OC,10.0,40,534
+polyvinyl ester,*CC(*)OC,10.0,50,755
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,11.0,20,392
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,11.0,30,453
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,11.0,50,706
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,6.0,50,1192
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,1.6,50,1300
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,303
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,411
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,394
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,305
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,362
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,304
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,332
+chlorosulphonated PE,*CCCC(Cl)CCCC(*)SOOCl,3.0,30,140
+chlorosulphonated PE,*CCCC(Cl)CCCC(*)SOOCl,3.0,40,152
+chlorosulphonated PE,*CCCC(Cl)CCCC(*)SOOCl,3.0,50,150
+BPA-CE,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,1.6,50,118
+BPC-CE,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,1.6,75,22
+BPC-CE,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,1.6,100,45

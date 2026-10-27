@@ -1,0 +1,206 @@
+smiles_names,smiles_canonicalized,thickness,flux,tig
+PE,*CC*,6.0,40,159
+PE,*CC*,6.0,70,47
+pe,*CC*,3.2,25,186
+pe,*CC*,3.2,75,29
+pe,*CC*,21.0,35,73
+pe,*CC*,3.0,30,127
+pe,*CC*,3.0,40,78
+pe,*CC*,3.0,50,54
+pe,*CC*,6.0,35,91
+pe,*CC*,6.0,35,73
+pom,*CO*,6.0,50,57
+pom,*CO*,6.0,40,74
+pom,*CO*,6.0,70,24
+PP,*CC(*)C,6.0,40,86
+PP,*CC(*)C,6.0,70,41
+pp,*CC(*)C,3.3,25,113
+pp,*CC(*)C,3.3,50,34
+pp,*CC(*)C,3.3,75,17
+pp,*CC(*)C,6.0,40,19
+pp,*CC(*)C,6.0,35,50
+pvc,*CC(*)Cl,6.0,40,85
+pvc,*CC(*)Cl,6.0,70,48
+pvc,*CC(*)Cl,3.3,50,46
+pvc,*CC(*)Cl,3.3,75,24
+pvc,*CC(*)Cl,3.0,30,487
+pvc,*CC(*)Cl,3.0,40,276
+pvc,*CC(*)Cl,3.0,50,82
+pvc,*CC(*)Cl,6.0,30,320
+pvc,*CC(*)Cl,6.0,40,153
+pvc,*CC(*)Cl,6.0,50,87
+pvc,*CC(*)Cl,3.2,20,574
+pvc,*CC(*)Cl,3.2,30,318
+pvc,*CC(*)Cl,3.2,40,179
+pvc,*CC(*)Cl,3.2,50,115
+PTFE,*C(F)(F)C(*)(F)F,6.0,70,252
+PTFE,*C(F)(F)C(*)(F)F,3.0,40,330
+PTFE,*C(F)(F)C(*)(F)F,3.0,50,193
+pmma,*CC(*)(C)C(=O)OC,4.8,25,97
+pmma,*CC(*)(C)C(=O)OC,4.8,50,30
+pmma,*CC(*)(C)C(=O)OC,10.0,50,47
+pmma,*CC(*)(C)C(=O)OC,10.0,50,44
+pmma,*CC(*)(C)C(=O)OC,10.0,50,50
+pmma,*CC(*)(C)C(=O)OC,10.0,50,64
+pmma,*CC(*)(C)C(=O)OC,18.0,20,165
+pmma,*CC(*)(C)C(=O)OC,18.0,35,42
+pmma,*CC(*)(C)C(=O)OC,18.0,50,21
+PS,*CC(*)c1ccccc1,6.0,40,97
+PS,*CC(*)c1ccccc1,6.0,70,50
+PS,*CC(*)c1ccccc1,4.0,50,42
+PS,*CC(*)c1ccccc1,6.0,35,88
+PS,*CC(*)c1ccccc1,6.0,50,65
+ps,*CC(*)c1ccccc1,6.0,35,88
+ps,*CC(*)c1ccccc1,6.0,50,65
+pps,*Sc1ccc(*)cc1,12.5,50,175
+pps,*Sc1ccc(*)cc1,12.5,75,53
+pps,*Sc1ccc(*)cc1,12.5,100,32
+ppo,*Oc1c(C)cc(*)cc1C,3.2,30,133
+ppo,*Oc1c(C)cc(*)cc1C,3.2,40,104
+ppo,*Oc1c(C)cc(*)cc1C,3.2,50,63
+PET,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.0,40,116
+PET,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.0,70,42
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.9,25,340
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.9,50,85
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.9,75,40
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.0,35,209
+pek ,*C(=O)c1cccc(Oc2cccc(*)c2)c1,6.0,50,166
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,6.0,40,113
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,6.0,70,59
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,3.2,20,372
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,3.2,30,152
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,3.2,40,106
+PBT,*OCCCCOC(=O)c1ccc(C(*)=O)cc1,3.2,50,68
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,70,31
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,3.5,25,556
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,3.5,50,72
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,3.5,75,30
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,20,700
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,30,193
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,40,115
+pa66,*NCCCCCCNC(=O)CCCCC(*)=O,6.0,50,74
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,3.2,50,106
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,3.2,75,45
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,1.6,50,61
+pes,*Oc1ccc(S(=O)(=O)c2ccc(*)cc2)cc1,1.6,75,29
+pen,*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1,3.0,35,179
+pen,*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1,3.0,50,90
+pen,*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1,3.0,75,39
+pen,*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1,3.0,100,23
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,35,167
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,50,67
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,75,32
+xu71787,*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,6.4,100,20
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,35,342
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,120
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,100,18
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,40,163
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,70,60
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,40,144
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,5.6,50,149
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,5.6,75,55
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,30,276
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,40,166
+PC,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,3.2,50,108
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,50,58
+pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,6.0,50,77
+polyphosphazene,*N=P(*)(Oc1ccccc1)Oc1ccc(OCC)cc1,4.0,50,16
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,35,151
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,50,88
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,75,40
+l10,*N=C(*)Oc1cccc(C(C)c2cccc(OC(*)=N*)c2)c1,6.4,100,22
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,35,171
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,75,40
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,100,26
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,1.6,50,70
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,50,213
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,75,65
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,100,36
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,3.2,50,212
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,3.2,75,90
+pekk,*C(=O)c1cccc(C(=O)c2cccc(Oc3cccc(*)c3)c2)c1,3.0,35,251
+pekk,*C(=O)c1cccc(C(=O)c2cccc(Oc3cccc(*)c3)c2)c1,3.0,75,37
+pekk,*C(=O)c1cccc(C(=O)c2cccc(Oc3cccc(*)c3)c2)c1,3.0,100,26
+m10,*N=C(*)Oc1c(C)ccc(Cc2ccc(C)c(OC(*)=N*)c2C)c1C,6.4,35,159
+m10,*N=C(*)Oc1c(C)ccc(Cc2ccc(C)c(OC(*)=N*)c2C)c1C,6.4,50,69
+m10,*N=C(*)Oc1c(C)ccc(Cc2ccc(C)c(OC(*)=N*)c2C)c1C,6.4,75,24
+m10,*N=C(*)Oc1c(C)ccc(Cc2ccc(C)c(OC(*)=N*)c2C)c1C,6.4,100,19
+bpc-pc,*Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=O)cc2)cc1,6.0,50,90
+bpc-pc,*Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=O)cc2)cc1,6.0,100,14
+pbi,*c1ccc(-c2nc3ccc(-c4ccc5[nH]c(*)nc5c4)cc3[nH]2)cc1,12.5,75,215
+pbi,*c1ccc(-c2nc3ccc(-c4ccc5[nH]c(*)nc5c4)cc3[nH]2)cc1,12.5,100,108
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,35,294
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,75,139
+rd98-228,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,6.4,100,129
+pai,*NC(=O)c1ccc2c(c1)C(=O)N(c1ccc(Cc3cccc(*)c3)cc1)C2=O,12.5,75,50
+pai,*NC(=O)c1ccc2c(c1)C(=O)N(c1ccc(Cc3cccc(*)c3)cc1)C2=O,12.5,100,22
+pt30,*N=C(*)Oc1ccccc1Cc1cccc(Cc2ccccc2OC(*)=N*)c1OC(*)=N*,6.4,35,202
+pt30,*N=C(*)Oc1ccccc1Cc1cccc(Cc2ccccc2OC(*)=N*)c1OC(*)=N*,6.4,50,96
+pt30,*N=C(*)Oc1ccccc1Cc1cccc(Cc2ccccc2OC(*)=N*)c1OC(*)=N*,6.4,75,40
+pt30,*N=C(*)Oc1ccccc1Cc1cccc(Cc2ccccc2OC(*)=N*)c1OC(*)=N*,6.4,100,19
+pi,*c1cccc(Oc2ccc(-n3c(=O)c4cc5c(=O)n(*)c(=O)c5cc4c3=O)cc2)c1,12.5,75,163
+pi,*c1cccc(Oc2ccc(-n3c(=O)c4cc5c(=O)n(*)c(=O)c5cc4c3=O)cc2)c1,12.5,100,85
+f10,*N=C(*)Oc1cccc(C(c2cccc(OC(*)=N*)c2)(C(F)(F)F)C(F)(F)F)c1,6.4,75,41
+f10,*N=C(*)Oc1cccc(C(c2cccc(OC(*)=N*)c2)(C(F)(F)F)C(F)(F)F)c1,6.4,100,27
+bpa ep,*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,1.6,50,102
+bpc ep,*OCC(*)COc1ccc(C(=C(Cl)Cl)c2ccc(OCC(*)CO*)cc2)cc1,1.6,50,74
+xu366,*N=C(*)Oc1cccc(C(C)(C)c2cccc(C(C)(C)c3cccc(OC(*)=N*)c3)c2)c1,6.4,50,69
+xu366,*N=C(*)Oc1cccc(C(C)(C)c2cccc(C(C)(C)c3cccc(OC(*)=N*)c3)c2)c1,6.4,75,32
+pphs,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,1.6,50,71
+pphs,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,1.6,75,28
+pphs,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,1.6,100,17
+ppsu,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,12.5,50,111
+ppsu,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,12.5,75,40
+ppsu,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,12.5,100,22
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,1.6,50,57
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,1.6,100,19
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,35,217
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,75,28
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,100,16
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,12.5,50,101
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,12.5,100,19
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,6.0,50,67
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,6.0,50,70
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,3.2,50,105
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,3.2,75,38
+pa6,*NCCCCCC(*)=O,6.0,30,140
+pa6,*NCCCCCC(*)=O,6.0,30,120
+pa6,*NCCCCCC(*)=O,6.0,50,50
+pa6,*NCCCCCC(*)=O,6.0,50,50
+pa6,*NCCCCCC(*)=O,6.0,70,25
+pa11,*NCCCCCCCCCCC(*)=O,6.0,50,36
+pa12,*NCCCCCCCCCCCC(*)=O,6.0,50,85
+pla,*OC(=O)C(*)C,3.0,50,26
+CPVC,*CC(Cl)C(Cl)C(*)Cl,6.0,40,621
+CPVC,*CC(Cl)C(Cl)C(*)Cl,6.0,70,372
+cpvc,*CC(Cl)C(Cl)C(*)Cl,6.0,50,538
+polyurethane,*OCCOC(=O)Nc1cccc(Cc2ccc(NC(*)=O)cc2)c1,4.0,50,16
+xu371,*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,6.4,35,203
+xu371,*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,6.4,50,93
+xu371,*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,6.4,75,41
+xu371,*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,6.4,100,23
+F PEK,*Oc1ccc(C(c2ccc(Oc3ccc(C(=O)c4ccc(C(c5ccc(C(=O)c6ccc(*)cc6)cc5)(C(F)(F)F)C(F)(F)F)cc4)cc3)cc2)(C(F)(F)F)C(F)(F)F)cc1,6.0,50,118
+F&P polyether,*Oc1ccc(C(c2ccc(Oc3ccc(P(=O)(c4ccccc4)c4ccc(*)cc4)cc3)cc2)(C(F)(F)F)C(F)(F)F)cc1,6.0,50,91
+pvf,*CC(*)F,6.0,50,16
+polyvinyl ester,*CC(*)OC,10.0,30,120
+polyvinyl ester,*CC(*)OC,10.0,40,78
+polyvinyl ester,*CC(*)OC,10.0,50,38
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,11.0,20,337
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,11.0,30,172
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,11.0,40,100
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,11.0,50,62
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,6.0,50,62
+epoxy (bpa),*OCC(C)COc1cccc(C(C)(C)c2cccc(OCC(C)CO*)c2)c1,1.6,50,50
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,200
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,246
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,215
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,164
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,221
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,150
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,199
+chlorosulphonated PE,*CCCC(Cl)CCCC(*)SOOCl,3.0,30,83
+chlorosulphonated PE,*CCCC(Cl)CCCC(*)SOOCl,3.0,40,53
+chlorosulphonated PE,*CCCC(Cl)CCCC(*)SOOCl,3.0,50,28
+BPA-CE,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,1.6,50,129
+BPC-CE,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,1.6,75,282
+BPC-CE,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,1.6,100,143

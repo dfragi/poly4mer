@@ -1,0 +1,17 @@
+mol_id,mol_name,smiles
+1,PC,*OC(=O)Oc1ccc(C(C)(C)c2ccc(*)cc2)cc1
+2,PU,*CNc1ccc(Cc2ccc(NC(=O)OCCO*)cc2)cc1
+3,NYLON,*NCCCCCCNC(=O)CCCCC(*)=O
+4,HIPS,*CC(*)c1ccccc1
+5,PS,*CC(*)c1ccccc1
+6,PPO,*Oc1c(C)cc(*)cc1C
+7,PEKK,*Oc1ccc(C(=O)c2ccc(C(=O)c3ccc(*)cc3)cc2)cc1
+8,PMMA,*CC(*)(C)C(=O)OC
+9,PP,*CC(*)C
+10,PSU,*Oc1ccc(C(C)(C)c2ccc(Oc3ccc(S(=O)(=O)c4ccc(O*)cc4)cc3)cc2)cc1
+11,PEN,*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1
+12,BPC-PC,*Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=O)cc2)cc1
+13,PPSU,*OC1CCC(C2CCC(Oc3ccc(S(=O)(=O)c4ccc(*)cc4)cc3)CC2)CC1
+14,PVC,*CC(*)Cl
+15,PEI,*c1cccc(N2C(=O)c3ccc(Oc4ccc(C(C)(C)c5ccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)cc5)cc4)cc3C2=O)c1
+16,PAI,*Nc1ccc(N2C(=O)c3ccc(C(*)=O)cc3C2=O)cc1

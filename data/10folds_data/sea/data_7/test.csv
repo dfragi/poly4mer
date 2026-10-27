@@ -1,0 +1,5 @@
+smiles_canonicalized,SEA
+*CC(*)Cl,0.1126999999999999
+*CC(Cl)C(Cl)C(*)Cl,0.0033333333333333
+*CCCC(Cl)CCCC(*)SOOCl,0.0455
+*N=C(*)Oc1cccc(C(C)(C)c2cccc(C(C)(C)c3cccc(OC(*)=N*)c3)c2)c1,0.1225

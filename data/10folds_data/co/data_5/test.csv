@@ -1,0 +1,4 @@
+smiles_canonicalized,CO
+*CC(*)C,0.03
+*Sc1ccc(*)cc1,0.0266666666666666
+*c1ccc(C2CC3CC2C2CC(*)CC32)cc1OC#N,0.03225

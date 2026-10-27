@@ -1,0 +1,6 @@
+smiles_canonicalized,SEA
+*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,0.1002
+*N=C(*)Oc1cccc(Cc2ccc(Cc3ccccc3OC(*)=N*)cc2OC(*)=N*)c1,0.041
+*OCCOC(=O)c1ccc2cc(C(*)=O)ccc2c1,0.0665
+*Oc1ccc(C(c2ccc(Oc3ccc(C(=O)c4ccc(C(c5ccc(C(=O)c6ccc(*)cc6)cc5)(C(F)(F)F)C(F)(F)F)cc4)cc3)cc2)(C(F)(F)F)C(F)(F)F)cc1,0.015
+*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,0.1036249999999999

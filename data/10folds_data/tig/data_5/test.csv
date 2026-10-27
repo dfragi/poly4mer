@@ -1,0 +1,24 @@
+smiles_names,smiles_canonicalized,thickness,flux,tig
+pe,*CC*,3.2,75,29
+pe,*CC*,3.0,30,127
+pom,*CO*,6.0,50,57
+pvc,*CC(*)Cl,6.0,70,48
+pvc,*CC(*)Cl,3.0,40,276
+pvc,*CC(*)Cl,3.2,20,574
+pvc,*CC(*)Cl,3.2,30,318
+pps,*Sc1ccc(*)cc1,12.5,75,53
+pet ,*OCCOC(=O)c1ccc(C(*)=O)cc1,6.9,25,340
+b10,*N=C(*)Oc1cccc(C(C)(C)c2cccc(OC(*)=N*)c2)c1,6.4,35,171
+peek,*C(=O)c1cccc(Oc2cccc(Oc3cccc(*)c3)c2)c1,12.5,75,65
+bpc-pc,*Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=O)cc2)cc1,6.0,100,14
+pi,*c1cccc(Oc2ccc(-n3c(=O)c4cc5c(=O)n(*)c(=O)c5cc4c3=O)cc2)c1,12.5,100,85
+pphs,*Oc1ccc(-c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)cc1,1.6,50,71
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,35,217
+psu,*Oc1cccc(C(C)(C)c2cccc(Oc3cccc(S(=O)(=O)c4cccc(*)c4)c3)c2)c1,12.5,100,16
+pei,*c1ccc(N2C(=O)c3ccc(Oc4cccc(C(C)(C)c5cccc(Oc6ccc7c(c6)C(=O)N(*)C7=O)c5)c4)cc3C2=O)cc1,3.2,75,38
+pvf,*CC(*)F,6.0,50,16
+polyvinyl ester,*CC(*)OC,10.0,40,78
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,164
+bpa pc,*Oc1cccc(C(C)(C)c2cccc(OC(*)=O)c2)c1,12.5,50,221
+chlorosulphonated PE,*CCCC(Cl)CCCC(*)SOOCl,3.0,30,83
+BPC-CE,*N=C(*)Oc1ccc(C(=C(Cl)Cl)c2ccc(OC(*)=N*)cc2)cc1,1.6,75,282
