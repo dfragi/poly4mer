@@ -2,7 +2,16 @@
 
 A multi-physics synthesis based chemical language model for polymer fire property prediction and inverse design, with conditioning on environmental parameters (heat flux and sample thickness).
 
+![Poly4mer overview.](fig1_poly4mer.png)
 
+*Overview. **Top:** pre-training puts physics in three places at once, in the data, in the
+joint objective, and in the architecture, where the property heads are made monotone in heat
+flux by taking a running minimum or maximum over 17 flux knots and interpolating at the
+requested flux. **Bottom left:** fine-tuning for property prediction freezes the encoder,
+decoder and token predictor and updates only the property heads on experimental data.
+**Bottom right:** inverse design runs gradient descent on the latent with every weight frozen,
+decoding each iterate into a candidate pSMILES. Source figure:
+[`fig1_poly4mer.pdf`](fig1_poly4mer.pdf).*
 
 This repository houses the code for our work in forward prediction and inverse polymer design using chemical language models. The released `v1.0.0` and `v2.0.0` code stays available under the tags of the same names.
 
